@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}{% endblock %}  |  jackatkins.dev</title>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/global.css') }}"
+    </head>
+    <body>
+        <nav>
+            <p id="title">jackatkins.dev</p>
+            <ul>
+                <a href="#"><li>What's Happenin'</li></a>
+                <a href="#"><li>Projects</li></a>
+                <a href="#"><li>Home</li></a>
+            </ul>
+        </nav>
+        <div class="wrapper fadein">
+            {% block content %}
+            {% endblock %}
+        </div>
+        <script src="{{ url_for('static', filename='js/fadein.js') }}"></script>
+    </body>
+</html>
