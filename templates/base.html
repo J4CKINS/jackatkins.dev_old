@@ -10,9 +10,9 @@
             <p id="title">jackatkins.dev - {% block navtitle %}{% endblock %}</p>
             <ul>
                 <a href="https://github.com/J4CKINS"><li class="github">GitHub</li></a>
-                <a href="#"><li>What's Happenin'</li></a>
-                <a href="#"><li>Projects</li></a>
-                <a href="#"><li>Home</li></a>
+                <a href="{{ url_for('blog') }}"><li>What's Happenin'</li></a>
+                <a href="{{ url_for('projects') }}"><li>Projects</li></a>
+                <a href="{{ url_for('home') }}"><li>Home</li></a>
             </ul>
         </nav>
         <div class="wrapper fadein">
