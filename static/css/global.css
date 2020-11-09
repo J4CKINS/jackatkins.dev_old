@@ -17,6 +17,23 @@ p {
     font-size: 20px;
 }
 
+button {
+    font-size: 20px;
+    background-color: #40739e;
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: none;
+
+    transition: all ease-in .2s;
+    -webkit-transition: all ease-in .2s;
+    -moz-transition: all ease-in .2s;
+    -o-transition: all ease-in .2s;
+}
+button:hover {
+    font-size: 22px;
+    cursor: pointer;
+}
+
 
 /* CLASSES */
 .wrapper {
@@ -40,11 +57,8 @@ p {
 .content-break-small {
     margin-top: 20px;
 }
-.lower-content-break {
-    margin-bottom: 50px;
-}
-.lower-content-break-small {
-    margin-bottom: 20px;
+.content-break-tiny {
+    margin-top:10px;
 }
 
 
@@ -59,7 +73,7 @@ nav p {
     float: left;
     margin-left: 30px;
     color: white;
-    font-size: 30px;
+    font-size: 28px;
 }
 
 nav ul {
