@@ -27,7 +27,7 @@ p {
 
     opacity: 0;
     padding-top: 15px;
-    transition: all ease-in .7s;
+    transition: all ease-in 1s;
 }
 
 .content-break {    
