@@ -27,11 +27,24 @@ p {
 
     opacity: 0;
     padding-top: 15px;
+    
     transition: all ease-in 1s;
+    -webkit-transition: all ease-in 1s;
+    -moz-transition: all ease-in 1s;
+    -o-transition: all ease-in 1s;
 }
 
 .content-break {    
-    margin: 50px 0 50px 0; 
+    margin-top: 50px;
+}
+.content-break-small {
+    margin-top: 20px;
+}
+.lower-content-break {
+    margin-bottom: 50px;
+}
+.lower-content-break-small {
+    margin-bottom: 20px;
 }
 
 
@@ -66,9 +79,20 @@ nav li {
     padding: 10px 20px 10px 20px;
     
 }
+
 nav li:hover {
     transition: background-color ease-in-out .4s;
+    -webkit-transition: background-color ease-in-out .4s;
+    -moz-transition: background-color ease-in-out .4s;
+    -o-transition: background-color ease-in-out .4s;
+
     background-color: white;
     color: black;
     cursor: pointer;
+}
+
+/* CUSTOM PURPLE HIGHLIGHT COLOR FOR GITHUB NAV ITEM */
+nav .github:hover {
+    background-color: #6e5494;
+    color: white;
 }
