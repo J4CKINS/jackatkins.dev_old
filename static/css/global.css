@@ -34,6 +34,9 @@ button:hover {
     cursor: pointer;
 }
 
+input {
+    color:black;
+}
 
 /* CLASSES */
 .wrapper {
