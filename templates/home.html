@@ -10,10 +10,10 @@
 </div>
 <div class="content-break">
     <p>Check out some of my projects</p>
-    <button class="content-break-tiny">Projects</button> 
+    <a href="{{ url_for('projects') }}"><button class="content-break-tiny">Projects</button></a> 
 </div>
 <div class="content-break">
     <p>Check out whats happenin' on my blog</p>
-    <button class="content-break-tiny">Blog</button> 
+    <a href=" {{ url_for('blog') }} "><button class="content-break-tiny">Blog</button></a>
 </div>
 {% endblock %}
