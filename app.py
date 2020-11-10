@@ -2,9 +2,23 @@ from flask import Flask
 from flask import render_template
 from flask import url_for
 from flask import redirect
+from flask import session
+
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
+#SQLALCHEMY
+app.config["SQLALCHEMY_DATABASE_URI"] = 'sqlite:///database.db'
+db = SQLAlchemy(app)
+
+#models
+from models import BlogPost
+
+#APP CONFIG
+app.secret_key = "SN1KT4196419662003"
+
+# MAIN ROUTES
 @app.route("/")
 def home():
     return render_template("home.html")
@@ -16,6 +30,7 @@ def blog():
 @app.route("/projects/")
 def projects():
     return render_template("projects.html")
+
 
 if __name__ == "__main__":
     app.run()
