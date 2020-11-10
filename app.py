@@ -60,10 +60,13 @@ def admin():
         if session["admin_user"]:
             return render_template("admin.html")
     except KeyError:
-        return redirect(url_for("home"))
+        return redirect(url_for("login"))
+
 
 @app.route("/admin/login/", methods=["GET","POST"])
 def login():
+
+    # LOGIN REQUEST
     if request.method == "POST":
         
         # get data from form
@@ -88,10 +91,17 @@ def login():
 
     else:
         return render_template("login.html")
+        
 
 @app.route("/admin/blog/newpost/", methods=["GET","POST"])
 def newblogpost():
-    return render_template("newblogpost.html")
+
+    # check if admin is logged in
+    try:
+        if session["admin_user"]:
+            return render_template("newblogpost.html")
+    except KeyError:
+        return redirect(url_for("login"))
 
 if __name__ == "__main__":
     app.run()
