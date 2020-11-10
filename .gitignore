@@ -1,1 +1,3 @@
 .vscode/
+*.pyc
+schema.py
