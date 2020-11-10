@@ -32,6 +32,16 @@ def projects():
     return render_template("projects.html")
 
 
+#ADMIN PAGE ROUTES
+
+@app.route("/admin/")
+def admin():
+    return render_template("admin.html")
+
+@app.route("/admin/blog/newpost/")
+def newblogpost():
+    return render_template("newblogpost.html")
+
 if __name__ == "__main__":
     app.run()
 
