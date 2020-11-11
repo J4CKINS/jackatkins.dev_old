@@ -132,7 +132,7 @@ def newblogpost():
             return redirect(url_for("login"))
 
 
-@app.route("/admin/blog/newpost/imageupload/", methods=["POST"])
+@app.route("/admin/imageupload/", methods=["POST"])
 def imageupload():
 
     #verify user

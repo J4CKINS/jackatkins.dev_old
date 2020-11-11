@@ -12,7 +12,7 @@ function readFile() {
 
 function uploadData(data) {
     var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "/admin/blog/newpost/imageupload/", false);
+    xhttp.open("POST", "/admin/imageupload/", false);
     xhttp.send(data);
 
     var urlfield = document.getElementById("image-url");
