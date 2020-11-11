@@ -70,7 +70,7 @@ textarea:focus {
     float: left;
     text-align: center;
     width: 100%;
-    padding: 0 20% 0 20%;
+    padding: 0 20% 70px 20%;
 
     opacity: 0;
     padding-top: 15px;
@@ -89,6 +89,9 @@ textarea:focus {
 }
 .content-break-tiny {
     margin-top:10px;
+}
+.content-break-bottom {
+    margin: 50px; 
 }
 
 .submit {

@@ -1,5 +1,7 @@
 from datetime import datetime
 import bcrypt
+import requests
+import json
 
 from flask import Flask
 from flask import render_template
@@ -128,6 +130,29 @@ def newblogpost():
                 return render_template("newblogpost.html")
         except KeyError:
             return redirect(url_for("login"))
+
+
+@app.route("/admin/blog/newpost/imageupload/", methods=["POST"])
+def imageupload():
+
+    #verify user
+    try:
+        if session["admin_user"]:
+            
+            #send data off to imgur api
+            payload = {"image": request.data.decode()}
+            headers = {'Authorization': 'Client-ID 78182536f30f0fe'}
+            res = requests.request("POST", "https://api.imgur.com/3/image", headers=headers, data=payload, files=[])
+
+            res = json.loads(res.text.encode('utf8').decode())
+
+            if res["success"]:
+                return res["data"]["link"]
+            else:
+                return res["success"] + " Error connecting to API"
+
+    except KeyError:
+        return "403"
 
 if __name__ == "__main__":
     db.create_all()
