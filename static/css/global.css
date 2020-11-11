@@ -21,6 +21,7 @@ button {
     font-size: 20px;
     background-color: #40739e;
     padding: 10px 15px;
+    margin: 0px 10px;
     border-radius: 10px;
     border: none;
 
@@ -63,6 +64,28 @@ textarea {
 }
 textarea:focus {
     outline: none;
+}
+
+table {
+    width: 100%;
+    padding: 10px;
+    font-size: 25px;
+    border-collapse: collapse;
+}
+
+th {
+    background-color: #1e2329;
+}
+
+td {
+    padding: 10px;
+}
+
+tr:nth-child(even) {
+    background-color: #242730;
+}
+tr:nth-child(odd) {
+    background-color: #323642;
 }
 
 /* CLASSES */

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Blog Posts{% endblock %}
+{% block navtitle %} Blog Posts {% endblock %}
+
+{% block content %}
+<div>
+    <h1 class="content-break">Blog Posts Manager</h1>
+    <table class="content-break">
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Actions</th>
+        </tr>
+        {% for post in posts %}
+        <tr>
+            <td>{{ post.id }}</td>
+            <td>{{ post.title }}</td>
+            <td>
+                <a href="/admin/blog/posts/edit/{{ post.id }}"><button>Edit</button></a> 
+                <a href="/admin/blog/posts/delete/{{ post.id }}"><button>Delete</button></a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

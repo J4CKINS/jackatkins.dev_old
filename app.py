@@ -132,6 +132,65 @@ def newblogpost():
             return redirect(url_for("login"))
 
 
+
+@app.route("/admin/blog/posts/")
+def blogposts():
+    
+    #validate user
+    try:
+        if session["admin_user"]:
+            
+            #load posts from database
+            posts = BlogPost.query.all()
+
+            return render_template("blogposts.html", posts=posts)
+
+    except KeyError:
+        return redirect(url_for("login"))
+
+
+@app.route("/admin/blog/posts/edit/<id>", methods=["GET", "POST"])
+def editpost(id):
+
+    #validate user
+    try:
+        if session["admin_user"]:
+
+            if request.method == "POST":
+                
+                # get form data
+                title = request.form["title"]
+                content = request.form["content"]
+
+                # get record that needs to be updated
+                post = BlogPost.query.filter_by(id=id).first()
+
+                if post:
+                    post.title = title
+                    post.content = content
+                    db.session.commit()
+
+                    return redirect(url_for("blogposts"))
+                
+                else:
+                    return redirect(url_for("blogposts"))
+            
+            else:
+                
+                #load post data from database
+                post = BlogPost.query.filter_by(id=id).first()
+
+                # if post exists
+                if post:
+                    return render_template("editpost.html", post=post)
+                else:
+                    return redirect(url_for("blogposts"))
+
+    except KeyError:
+        return redirect(url_for("login"))
+
+
+
 @app.route("/admin/imageupload/", methods=["POST"])
 def imageupload():
 
