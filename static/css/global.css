@@ -33,9 +33,22 @@ button:hover {
     font-size: 22px;
     cursor: pointer;
 }
+button:focus {
+    outline:none;
+}
 
 input {
+    font-size: 20px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: none;
     color:black;
+    transition: all ease-in .2s;
+}
+input:focus {
+    border-radius: 20px;
+    border: #65b9fd solid 2px;
+    outline: none;
 }
 
 /* CLASSES */
@@ -62,6 +75,24 @@ input {
 }
 .content-break-tiny {
     margin-top:10px;
+}
+
+.submit {
+    color:white;
+    font-size: 20px;
+    background-color: #40739e;
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: none;
+
+    transition: all ease-in .2s;
+    -webkit-transition: all ease-in .2s;
+    -moz-transition: all ease-in .2s;
+    -o-transition: all ease-in .2s;
+}
+.submit:hover {
+    font-size: 22px;
+    cursor: pointer;
 }
 
 
