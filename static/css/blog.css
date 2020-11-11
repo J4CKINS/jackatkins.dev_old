@@ -1,0 +1,19 @@
+.blogpost {
+    background-color: #1e2329;
+    border-radius: 30px;
+    padding: 10px 20px;
+    margin-top: 30px;
+    float: left;
+    width: 100%;
+}
+
+.post-content {
+    margin-top: 20px;
+}
+
+.post-date {
+    margin-top: 20px;
+    float: left;
+    font-style: italic;
+    font-size: 15px;
+}
