@@ -96,12 +96,34 @@ def login():
 @app.route("/admin/blog/newpost/", methods=["GET","POST"])
 def newblogpost():
 
-    # check if admin is logged in
-    try:
-        if session["admin_user"]:
-            return render_template("newblogpost.html")
-    except KeyError:
-        return redirect(url_for("login"))
+    if request.method == "POST":
+        
+        # validate user
+        try:
+            if session["admin_user"]:
+                
+                # get form data
+                title = request.form["title"]
+                content = request.form["content"]
+
+                # add blog post to database
+                post = BlogPost(created=datetime.now(), title=title, content=content)
+                db.session.add(post)
+                db.session.commit()
+
+                # redirect to the blog page
+                return redirect(url_for("blog"))
+
+        except KeyError:
+            return redirect(url_for("login"))
+
+    else:
+        # check if admin is logged in
+        try:
+            if session["admin_user"]:
+                return render_template("newblogpost.html")
+        except KeyError:
+            return redirect(url_for("login"))
 
 if __name__ == "__main__":
     app.run()

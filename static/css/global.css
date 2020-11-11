@@ -47,7 +47,21 @@ input {
 }
 input:focus {
     border-radius: 20px;
-    border: #65b9fd solid 2px;
+    outline: none;
+}
+
+textarea {
+    resize: none;
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 20px;
+    font-size: 20px;
+    width:800px;
+    height:600px;
+    padding: 10px 10px;
+}
+textarea:focus {
     outline: none;
 }
 
@@ -73,8 +87,8 @@ input:focus {
 .content-break-small {
     margin-top: 20px;
 }
-.content-break-tiny {
-    margin-top:10px;
+.content-break-large {
+    margin-top:80px;
 }
 
 .submit {
