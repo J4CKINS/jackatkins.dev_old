@@ -149,7 +149,7 @@ def blogposts():
         return redirect(url_for("login"))
 
 
-@app.route("/admin/blog/posts/edit/<id>", methods=["GET", "POST"])
+@app.route("/admin/blog/posts/edit/<id>/", methods=["GET", "POST"])
 def editpost(id):
 
     #validate user
@@ -189,6 +189,29 @@ def editpost(id):
     except KeyError:
         return redirect(url_for("login"))
 
+
+@app.route("/admin/blog/posts/delete/<id>/")
+def deletepost(id):
+
+    # validate user
+    try:
+        if session["admin_user"]:
+
+            # get record from database
+            post = BlogPost.query.filter_by(id=id).first()
+
+            if post:
+                # delete post
+                db.session.delete(post)
+                db.session.commit()
+
+                return redirect(url_for("blogposts"))
+
+            else:
+                return redirect(url_for("blogposts"))
+
+    except:
+        return "403"
 
 
 @app.route("/admin/imageupload/", methods=["POST"])
