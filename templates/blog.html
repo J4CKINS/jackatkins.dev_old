@@ -2,4 +2,13 @@
 {% block title %}Blog{% endblock %}
 {% block navtitle %}Blog{% endblock %}
 {% block content %}
+
+{% for post in posts %}
+<b><p>{{ post.title }}</p></b>
+<p>{{post.content|safe}}</p>
+<i><p>{{ post.created }}</p></i>
+<br/>
+<br/>
+{% endfor %}
+
 {% endblock %}

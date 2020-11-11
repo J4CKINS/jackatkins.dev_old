@@ -87,8 +87,8 @@ textarea:focus {
 .content-break-small {
     margin-top: 20px;
 }
-.content-break-large {
-    margin-top:80px;
+.content-break-tiny {
+    margin-top:10px;
 }
 
 .submit {

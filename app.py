@@ -45,7 +45,11 @@ def home():
 
 @app.route("/blog/")
 def blog():
-    return render_template("blog.html")
+
+    # get blog posts from database
+    posts = BlogPost.query.all()
+
+    return render_template("blog.html", posts=posts)
 
 @app.route("/projects/")
 def projects():
@@ -126,5 +130,6 @@ def newblogpost():
             return redirect(url_for("login"))
 
 if __name__ == "__main__":
+    db.create_all()
     app.run()
 
