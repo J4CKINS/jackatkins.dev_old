@@ -18,7 +18,7 @@
     <form class="content-break">
         <input class="file-upload" type="file" name="image">
     </form>
-    <button onclick="readFile()">Upload</button>
+    <button onclick="readFile('admin/imageupload/')">Upload</button>
     <p id="image-url" class="content-break-small"></p>
     <script src="{{ url_for('static', filename='js/image_upload.js') }}"></script>
 </div>
