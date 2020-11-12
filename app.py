@@ -55,7 +55,11 @@ def blog():
 
 @app.route("/projects/")
 def projects():
-    return render_template("projects.html")
+
+    # get posts from database
+    posts = ProjectPost.query.all()
+
+    return render_template("projects.html", posts=posts)
 
 
 #ADMIN PAGE ROUTES
@@ -99,6 +103,7 @@ def login():
         return render_template("login.html")
         
 
+# BLOG
 @app.route("/admin/blog/newpost/", methods=["GET","POST"])
 def newblogpost():
 
@@ -182,7 +187,7 @@ def editpost(id):
 
                 # if post exists
                 if post:
-                    return render_template("editpost.html", post=post)
+                    return render_template("editblogpost.html", post=post)
                 else:
                     return redirect(url_for("blogposts"))
 
@@ -213,6 +218,33 @@ def deletepost(id):
     except:
         return "403"
 
+
+# PROJECTS
+@app.route("/admin/projects/newpost", methods=["GET", "POST"])
+def newprojectpost():
+
+    # validate user
+    try:
+        if session["admin_user"]:
+
+            if request.method == "POST":
+
+                # get form data
+                title = request.form["title"]
+                content = request.form["content"]
+
+                post = ProjectPost(title=title, content=content, created=datetime.now())
+
+                db.session.add(post)
+                db.session.commit()
+
+                return redirect(url_for("projects"))
+
+            else:
+                return render_template("newprojectpost.html")
+    
+    except KeyError:
+        return redirect(url_for("login"))
 
 @app.route("/admin/imageupload/", methods=["POST"])
 def imageupload():
