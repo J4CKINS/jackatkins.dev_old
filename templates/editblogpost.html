@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Edit Post{% endblock %}
+{% block navtitle %}Edit Blog Post{% endblock %}
+
+{% block content %}
+
+<div class="content-break">
+    <h1>Edit Blog Post</h1>
+    <form class="content-break" method="post">
+        <h2>Post title</h2>
+        <input type="text" name="title" class="content-break-small" style="font-size: 30px;" maxlength="100" value="{{ post.title }}"">
+        <h2 class="content-break">Post Content</h2>
+        <textarea name="content" class="content-break-small">{{ post.content }}</textarea>
+        <br>
+        <input type="submit" class="submit content-break">
+    </form>
+
+    <form class="content-break">
+        <input class="file-upload" type="file" name="image">
+    </form>
+    <button onclick="readFile()">Upload</button>
+    <p id="image-url" class="content-break-small"></p>
+    <script src="{{ url_for('static', filename='js/image_upload.js') }}"></script>
+</div>
+{% endblock %}
