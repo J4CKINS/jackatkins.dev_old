@@ -16,7 +16,7 @@
             <td>{{ post.id }}</td>
             <td>{{ post.title }}</td>
             <td>
-                <a href="{{ url_for('editblogpost', id=post.id) }}"><button>Edit</button></a> 
+                <a href="{{ url_for('posteditor', type='blog', id=post.id) }}"><button>Edit</button></a> 
                 <a href="{{ url_for('deleteblogpost', id=post.id) }}"><button>Delete</button></a>
             </td>
         </tr>

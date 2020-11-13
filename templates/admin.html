@@ -7,13 +7,13 @@
 <div class="content-break">
     <h1>Admin Dashboard</h1>
     
-    <a href="{{ url_for('newblogpost') }}"><button class="content-break">New Blog Post</button></a>
+    <a href="{{ url_for('posteditor', type='blog', id='new') }}"><button class="content-break">New Blog Post</button></a>
     <br>
     
     <a href="{{ url_for('blogposts') }}"><button class="content-break">Blog Dashboard</button></a>
     <br>
     
-    <a href="{{ url_for('newprojectpost') }}"><button class="content-break">New Project Post</button></a>
+    <a href="{{ url_for('posteditor', type='project', id='new') }}"><button class="content-break">New Project Post</button></a>
     <br>
 
     <a href="{{ url_for('projectposts') }}"><button class="content-break">Projects Dashboard</button></a>

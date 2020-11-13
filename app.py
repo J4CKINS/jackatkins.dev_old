@@ -103,38 +103,97 @@ def login():
         return render_template("login.html")
         
 
-# BLOG
-@app.route("/admin/blog/posts/new/", methods=["GET","POST"])
-def newblogpost():
 
-    if request.method == "POST":
-        
-        # validate user
-        try:
-            if session["admin_user"]:
-                
-                # get form data
+@app.route("/admin/<type>/posts/<id>", methods=["GET","POST"])
+def posteditor(type, id):
+
+    # validate user
+    try:
+        if session["admin_user"]:
+
+            # POST
+            if request.method == "POST":
+
                 title = request.form["title"]
                 content = request.form["content"]
 
-                # add blog post to database
-                post = BlogPost(created=datetime.now(), title=title, content=content)
-                db.session.add(post)
-                db.session.commit()
+                if type == "blog":
 
-                # redirect to the blog page
-                return redirect(url_for("blog"))
+                    if id == "new":
+                        post = BlogPost(title=title, content=content, created=datetime.now())
+                        db.session.add(post)
+                        db.session.commit()
 
-        except KeyError:
-            return redirect(url_for("login"))
+                    elif isinstance(id, int):
+                        post = BlogPost.query.filter_by(id=id).first()
 
-    else:
-        # check if admin is logged in
-        try:
-            if session["admin_user"]:
-                return render_template("newpost.html")
-        except KeyError:
-            return redirect(url_for("login"))
+                        post.title = title
+                        post.content = content
+
+                        db.session.commit()
+
+                    else:
+                        return 404
+                    
+                    return redirect(url_for("admin"))
+
+
+                elif type == "project":
+                    if id == "new":
+                        post = ProjectPost(title=title, content=content, created=datetime.now())
+                        db.session.add(post)
+                        db.session.commit()
+
+                    elif isinstance(id, int):
+                        post = ProjectPost.query.filter_by(id=id).first()
+
+                        post.title = title
+                        post.content = content
+
+                        db.session.commit()
+
+                    else:
+                        return 404
+
+                else:
+                    return 404
+
+            # GET
+            else:
+                
+                # create a new post
+                if id == "new":
+                    if type == "blog":
+                        return render_template("posteditor.html", postTitle="", postContent="")
+
+                    elif type == "project":
+                        return render_template("posteditor.html", postTitle="", postContent="" )
+                    
+                    else:
+                        return 404
+                
+                # edit post
+                elif isinstance(int(id), int):
+                    
+                    post = None
+                    if type == "blog":
+                         post = BlogPost.query.filter_by(id=int(id)).first()
+                    elif type == "project":
+                        post = ProjectPost.query.filter_by(id=int(id)).first()
+                    
+                    if post:
+                        return render_template("posteditor.html", postTitle=post.title, postContent=post.content)
+                    
+                    else:
+                        return redirect(url_for("admin"))
+
+                # error
+                else:
+                    return "404"
+
+    
+    except KeyError:
+        return redirect(url_for("login"))
 
 
 
@@ -147,52 +206,12 @@ def blogposts():
             
             #load posts from database
             posts = BlogPost.query.all()
-
+            
             return render_template("blogposts.html", posts=posts)
 
     except KeyError:
         return redirect(url_for("login"))
 
-
-@app.route("/admin/blog/posts/edit/<id>/", methods=["GET", "POST"])
-def editblogpost(id):
-
-    #validate user
-    try:
-        if session["admin_user"]:
-
-            if request.method == "POST":
-                
-                # get form data
-                title = request.form["title"]
-                content = request.form["content"]
-
-                # get record that needs to be updated
-                post = BlogPost.query.filter_by(id=id).first()
-
-                if post:
-                    post.title = title
-                    post.content = content
-                    db.session.commit()
-
-                    return redirect(url_for("blogposts"))
-                
-                else:
-                    return redirect(url_for("blogposts"))
-            
-            else:
-                
-                #load post data from database
-                post = BlogPost.query.filter_by(id=id).first()
-
-                # if post exists
-                if post:
-                    return render_template("editblogpost.html", post=post)
-                else:
-                    return redirect(url_for("blogposts"))
-
-    except KeyError:
-        return redirect(url_for("login"))
 
 
 @app.route("/admin/blog/posts/delete/<id>/")
