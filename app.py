@@ -132,7 +132,7 @@ def newblogpost():
         # check if admin is logged in
         try:
             if session["admin_user"]:
-                return render_template("newblogpost.html")
+                return render_template("newpost.html")
         except KeyError:
             return redirect(url_for("login"))
 
@@ -241,7 +241,7 @@ def newprojectpost():
                 return redirect(url_for("projects"))
 
             else:
-                return render_template("newblogpost.html")
+                return render_template("newpost.html")
     
     except KeyError:
         return redirect(url_for("login"))
