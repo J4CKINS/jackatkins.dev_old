@@ -103,8 +103,8 @@ def login():
         return render_template("login.html")
         
 
-
-@app.route("/admin/<type>/posts/<id>", methods=["GET","POST"])
+# POSTS
+@app.route("/admin/<type>/post/<id>", methods=["GET","POST"])
 def posteditor(type, id):
 
     # validate user
@@ -133,9 +133,9 @@ def posteditor(type, id):
                         db.session.commit()
 
                     else:
-                        return 404
+                        return "404"
                     
-                    return redirect(url_for("admin"))
+                    return redirect(url_for("posts", type="blog"))
 
 
                 elif type == "project":
@@ -153,10 +153,10 @@ def posteditor(type, id):
                         db.session.commit()
 
                     else:
-                        return 404
+                        return "404"
 
                 else:
-                    return 404
+                    return "404"
 
             # GET
             else:
@@ -170,7 +170,7 @@ def posteditor(type, id):
                         return render_template("posteditor.html", postTitle="", postContent="" )
                     
                     else:
-                        return 404
+                        return "404"
                 
                 # edit post
                 elif isinstance(int(id), int):
@@ -185,7 +185,7 @@ def posteditor(type, id):
                         return render_template("posteditor.html", postTitle=post.title, postContent=post.content)
                     
                     else:
-                        return redirect(url_for("admin"))
+                        return redirect(url_for("posts", type="projects"))
 
                 # error
                 else:
@@ -197,18 +197,22 @@ def posteditor(type, id):
 
 
 
-@app.route("/admin/blog/posts/")
-def blogposts():
-    
-    #validate user
+@app.route("/admin/<type>/posts/")
+def posts(type):
+
+    # validate user
     try:
         if session["admin_user"]:
-            
-            #load posts from database
-            posts = BlogPost.query.all()
-            
-            return render_template("blogposts.html", posts=posts)
 
+            if type == "blog":
+                posts = BlogPost.query.all()
+            elif type == "projects":
+                posts = ProjectPost.query.all()
+            else:
+                return redirect(url_for("admin"))
+            
+            return render_template("posts.html", posts=posts, type=type.capitalize())
+    
     except KeyError:
         return redirect(url_for("login"))
 
@@ -237,91 +241,6 @@ def deleteblogpost(id):
     except:
         return "403"
 
-
-# PROJECTS
-@app.route("/admin/projects/posts/new/", methods=["GET", "POST"])
-def newprojectpost():
-
-    # validate user
-    try:
-        if session["admin_user"]:
-
-            if request.method == "POST":
-
-                # get form data
-                title = request.form["title"]
-                content = request.form["content"]
-
-                post = ProjectPost(title=title, content=content, created=datetime.now())
-
-                db.session.add(post)
-                db.session.commit()
-
-                return redirect(url_for("projects"))
-
-            else:
-                return render_template("newpost.html")
-    
-    except KeyError:
-        return redirect(url_for("login"))
-
-
-@app.route("/admin/projects/posts/")
-def projectposts():
-
-    # validate user
-    try:
-        if session["admin_user"]:
-            
-            # load posts from database
-            posts = ProjectPost.query.all()
-
-            return render_template("projectposts.html", posts=posts)
-    
-    except KeyError:
-        return redirect(url_for("login"))
-
-
-@app.route("/admin/projects/posts/edit/<id>", methods=["GET", "POST"])
-def editprojectpost(id):
-
-    # validate user
-    try:
-        if session["admin_user"]:
-
-            if request.method == "POST":
-                
-                # get form data
-                title = request.form["title"]
-                content = request.form["content"]
-
-                # get original post
-                post = ProjectPost.query.filter_by(id=id).first()
-
-                if post:
-                    post.title = title
-                    post.content = content
-
-                    # save new post
-                    db.session.commit()
-
-                    return redirect(url_for("projectposts"))
-
-                else:
-                    return redirect(url_for("projectposts"))
-
-            else:
-                # load post data from database
-                post = ProjectPost.query.filter_by(id=id).first()
-
-                if post:
-                    return render_template("editprojectpost.html", post=post)
-
-                else:
-                    return redirect(url_for("projectposts"))
-
-    except KeyError:
-        return redirect(url_for("login"))
 
 
 @app.route("/admin/projects/posts/delete/<id>")
