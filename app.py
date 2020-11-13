@@ -241,7 +241,7 @@ def newprojectpost():
                 return redirect(url_for("projects"))
 
             else:
-                return render_template("newprojectpost.html")
+                return render_template("newblogpost.html")
     
     except KeyError:
         return redirect(url_for("login"))
