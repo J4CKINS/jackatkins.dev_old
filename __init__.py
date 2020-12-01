@@ -62,6 +62,12 @@ def projects():
     return render_template("projects.html", posts=posts)
 
 
+#WOTW
+@app.route("/emma/")
+def emma():
+    return render_template("wotw.html")
+
+
 #ADMIN PAGE ROUTES
 
 @app.route("/admin/")
