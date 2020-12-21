@@ -38,56 +38,6 @@ button:focus {
     outline:none;
 }
 
-input {
-    font-size: 20px;
-    padding: 5px 10px;
-    border-radius: 10px;
-    border: none;
-    color:black;
-    transition: all ease-in .2s;
-}
-input:focus {
-    border-radius: 20px;
-    outline: none;
-}
-
-textarea {
-    resize: none;
-    background-color: white;
-    color: black;
-    border: none;
-    border-radius: 20px;
-    font-size: 20px;
-    width:800px;
-    height:600px;
-    padding: 10px 10px;
-}
-textarea:focus {
-    outline: none;
-}
-
-table {
-    width: 100%;
-    padding: 10px;
-    font-size: 25px;
-    border-collapse: collapse;
-}
-
-th {
-    background-color: #1e2329;
-}
-
-td {
-    padding: 10px;
-}
-
-tr:nth-child(even) {
-    background-color: #242730;
-}
-tr:nth-child(odd) {
-    background-color: #323642;
-}
-
 /* CLASSES */
 .wrapper {
     float: left;
@@ -115,24 +65,6 @@ tr:nth-child(odd) {
 }
 .content-break-bottom {
     margin: 50px; 
-}
-
-.submit {
-    color:white;
-    font-size: 20px;
-    background-color: #40739e;
-    padding: 10px 15px;
-    border-radius: 10px;
-    border: none;
-
-    transition: all ease-in .2s;
-    -webkit-transition: all ease-in .2s;
-    -moz-transition: all ease-in .2s;
-    -o-transition: all ease-in .2s;
-}
-.submit:hover {
-    font-size: 22px;
-    cursor: pointer;
 }
 
 
