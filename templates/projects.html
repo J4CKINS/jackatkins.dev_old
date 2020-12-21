@@ -14,10 +14,12 @@
 </div>
 <div class="content-break">
     {% for post in posts %}
+    {% if post["posted"] %}
         <div class="post">
-            <h1 class="post-title">{{ post.title }}</h1>
-            <p class="post-content">{{ post.content|safe }}</p>
+            <h1 class="post-title">{{ post["title"] }}</h1>
+            <p class="post-content">{{ post["content"]|safe }}</p>
         </div>
+    {% endif %}
     {% endfor %}
 </div>
 {% endblock %}
