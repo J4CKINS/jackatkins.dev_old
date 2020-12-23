@@ -9,6 +9,7 @@ from datetime import datetime
 import bcrypt
 import requests
 import json
+import base64
 
 #flask libs
 from flask import Flask
@@ -32,6 +33,7 @@ app = Flask(__name__)
 
 # config app
 app.secret_key = "SN1KT4196419662003"
+auth = "Ds9k74t3"
 
 # APP ROUTES
 @app.route("/")
@@ -50,9 +52,10 @@ def blog():
         # put post data into list
         posts = list()
         for post in data:
-            posts.append({"title":post[1], "content":post[2], "datestamp":post[3], "posted":bool(post[4])})
+            posts.append({"title":post[1], "content":post[2], "datestamp":post[3], "posted":bool(int(post[4]))})
 
         return render_template("blog.html", posts=posts)
+
 
 @app.route("/projects/", methods=["GET","POST"])
 def projects():
@@ -74,6 +77,32 @@ def projects():
 @app.route("/emma/")
 def wotw():
     return render_template("wotw.html")
+
+# IMAGE UPLOAD API
+@app.route("/upload_image/", methods=["POST"])
+def upload_image():
+
+    # get request data
+    data = json.loads(request.data)
+
+    # fetch auth key
+    with open("static/auth/auth.txt", "r") as file:
+        auth_key = file.read()
+
+    #check if request is authorized
+    if auth_key == data["auth"]:
+
+        image_data = base64.b64decode(data["data"]) #decode image data
+        
+        #write image data to file
+        with open(("static/img/" + data["filename"] + "." + data["format"]), "wb") as file:
+            file.write(image_data)
+        
+        return "200"
+    
+    return "403"
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
