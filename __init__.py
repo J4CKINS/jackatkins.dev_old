@@ -1,6 +1,6 @@
 #TODO
 #   create API for posting
-#   set up image saving to web server
+#   Implement markdown converter
 #________________________________________________________________________
 
 
@@ -17,6 +17,7 @@ from flask import redirect
 from flask import url_for
 from flask import request
 from flask import render_template
+from flask import send_from_directory
 
 #mysql libs and setup
 import mysql.connector
@@ -73,10 +74,9 @@ def projects():
 
         return render_template("projects.html", posts=posts)
 
-#WOTW
-@app.route("/emma/")
-def wotw():
-    return render_template("wotw.html")
+@app.route("/image/<name>")
+def image(name):
+    return send_from_directory('static/img', name)
 
 # IMAGE UPLOAD API
 @app.route("/upload_image/", methods=["POST"])
@@ -102,6 +102,12 @@ def upload_image():
     
     return "403"
 
+
+
+#WOTW
+@app.route("/emma/")
+def wotw():
+    return render_template("wotw.html")
 
 
 if __name__ == "__main__":
