@@ -10,6 +10,7 @@ import bcrypt
 import requests
 import json
 import base64
+import markdown
 
 #flask libs
 from flask import Flask
@@ -53,7 +54,7 @@ def blog():
         # put post data into list
         posts = list()
         for post in data:
-            posts.append({"title":post[1], "content":post[2], "datestamp":post[3], "posted":bool(int(post[4]))})
+            posts.append({"title":post[1], "content":markdown.markdown(post[2]), "datestamp":post[3], "posted":bool(int(post[4]))})
 
         return render_template("blog.html", posts=posts)
 
@@ -70,7 +71,7 @@ def projects():
         # put post data into list
         posts = list()
         for post in data:
-            posts.append({"title":post[1], "content":post[2], "datestamp":post[3], "posted":bool(post[4])})
+            posts.append({"title":post[1], "content":markdown.markdown(post[2]), "datestamp":post[3], "posted":bool(post[4])})
 
         return render_template("projects.html", posts=posts)
 
