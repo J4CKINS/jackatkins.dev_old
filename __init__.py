@@ -26,7 +26,8 @@ database = mysql.connector.connect(
     host="jackatkins.dev",
     user="app",
     password="F9we7t4f",
-    database="site_database"
+    database="site_database",
+    autocommit=True
 )
 cur = database.cursor()
 
@@ -55,6 +56,7 @@ def blog():
         posts = list()
         for post in data:
             posts.append({"title":post[1], "content":markdown.markdown(post[2]), "datestamp":post[3], "posted":bool(int(post[4]))})
+        
 
         return render_template("blog.html", posts=posts)
 
