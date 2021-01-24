@@ -12,6 +12,9 @@ import json
 import base64
 import markdown
 
+#markdown extensions
+from markdown.extensions.fenced_code import FencedCodeExtension
+
 #flask libs
 from flask import Flask
 from flask import redirect
@@ -55,7 +58,7 @@ def blog():
         # put post data into list
         posts = list()
         for post in data:
-            posts.append({"title":post[1], "content":markdown.markdown(post[2]), "datestamp":post[3], "posted":bool(int(post[4]))})
+            posts.append({"title":post[1], "content":markdown.markdown(post[2], extentions=[FencedCodeExtension()]), "datestamp":post[3], "posted":bool(int(post[4]))})
         
 
         return render_template("blog.html", posts=posts)
