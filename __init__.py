@@ -54,11 +54,16 @@ def blog():
         # fetch posts from database
         cur.execute("SELECT * FROM tblBlogPosts ORDER BY timestamp DESC;")
         data = cur.fetchall()
-    
+        
         # put post data into list
         posts = list()
         for post in data:
-            posts.append({"title":post[1], "content":markdown.markdown(post[2], extentions=[FencedCodeExtension()]), "datestamp":post[3], "posted":bool(int(post[4]))})
+            posts.append({
+                "title": post[1],
+                "content": convertMarkdown(post[2]),
+                "datestamp": post[3],
+                "posted": bool(int(post[4]))
+            })
         
 
         return render_template("blog.html", posts=posts)
@@ -115,6 +120,9 @@ def upload_image():
 def wotw():
     return render_template("wotw.html")
 
+
+def convertMarkdown(data):
+    return markdown.markdown(data, extensions=[FencedCodeExtension()])
 
 if __name__ == "__main__":
     app.run(debug=True)
