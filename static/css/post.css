@@ -1,3 +1,25 @@
+p {
+    margin: 0px 10px;
+    text-align: left;
+}
+
+pre {
+    text-align: left;
+    padding: 10px;
+    background-color: #0e1013;
+    border-radius: 10px;
+}
+
+code {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #0e1013;
+    border-radius: 10px;
+}
+
+img {
+    text-align: center;
+}
+
 .post {
     background-color: #1e2329;
     border-radius: 30px;
@@ -5,6 +27,11 @@
     margin-top: 30px;
     float: left;
     width: 100%;
+}
+
+.post-title {
+    font-size: 50px;
+    font-weight: bold;
 }
 
 .post-content {
