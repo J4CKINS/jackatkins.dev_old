@@ -20,6 +20,10 @@ img {
     text-align: center;
 }
 
+pre span {
+    font-family: 'Courier New', Courier, monospace;
+}
+
 .post {
     background-color: #1e2329;
     border-radius: 30px;
