@@ -11,7 +11,7 @@
 {% for post in posts %}
 {% if post["posted"] %}
 <div class="post">
-    <h1 class="post-title">{{ post["title"] }}</h1>
+    <p class="post-title">{{ post["title"] }}</h1>
     <p class="post-content">{{ post["content"]|safe }}</p>
     <p class="post-date">{{ post["datestamp"] }}</p>
 </div>
