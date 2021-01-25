@@ -6,6 +6,7 @@
 
 #general libs
 from datetime import datetime
+from bs4 import BeautifulSoup, Tag
 import bcrypt
 import requests
 import json
@@ -14,6 +15,12 @@ import markdown
 
 #markdown extensions
 from markdown.extensions.fenced_code import FencedCodeExtension
+from markdown.extensions.codehilite import CodeHiliteExtension
+
+# code highlighting
+from pygments import highlight
+from pygments.lexers import PythonLexer
+from pygments.formatters import HtmlFormatter
 
 #flask libs
 from flask import Flask
@@ -60,7 +67,7 @@ def blog():
         for post in data:
             posts.append({
                 "title": post[1],
-                "content": convertMarkdown(post[2]),
+                "content": highlightCode(convertMarkdown(post[2])),
                 "datestamp": post[3],
                 "posted": bool(int(post[4]))
             })
@@ -122,7 +129,35 @@ def wotw():
 
 
 def convertMarkdown(data):
-    return markdown.markdown(data, extensions=[FencedCodeExtension()])
+    return markdown.markdown(data, extensions=[FencedCodeExtension(), CodeHiliteExtension()])
+
+def highlightCode(post):
+
+    soup = BeautifulSoup(post, 'html.parser') # create new soup instance for html parsing
+
+    # find all of the code tags in the content and sdve them to a list
+    codeTags = soup.findAll("code")
+
+    # highlight code contained in tags and save to separate list
+    highlightedCode = []
+    for code in codeTags:
+        highlightedCode.append(highlight(code.text, PythonLexer(), HtmlFormatter())) #TODO add multilexer support
+    
+    #insert formatted code into their own soup objects
+    codeSoups = []
+    for code in highlightedCode:
+        codeSoups.append(BeautifulSoup(code, 'html.parser'))
+
+    # clear main soup code tags for formatted code to be inserted into
+    for tag in codeTags:
+        tag.clear()
+    
+    # insert code from codeSoups into main soup code tags
+    for index, tag in enumerate(soup.findAll("code")):
+        tag.insert(1, codeSoups[index])
+    
+    #and finalyyyyy.... return soup
+    return soup
 
 if __name__ == "__main__":
     app.run(debug=True)
