@@ -19,7 +19,7 @@ from markdown.extensions.codehilite import CodeHiliteExtension
 
 # code highlighting
 from pygments import highlight
-from pygments.lexers import PythonLexer
+from pygments.lexers import get_lexer_for_filename
 from pygments.formatters import HtmlFormatter
 
 #flask libs
@@ -34,10 +34,11 @@ from flask import send_from_directory
 import mysql.connector
 database = mysql.connector.connect(
     host="jackatkins.dev",
-    user="app",
+    user="jack",
     password="F9we7t4f",
     database="site_database",
-    autocommit=True
+    autocommit=True,
+    auth_plugin="mysql_native_password"
 )
 cur = database.cursor()
 
@@ -65,10 +66,19 @@ def blog():
         # put post data into list
         posts = list()
         for post in data:
+
+            #format datestamp
+            datestamp   = post[3]
+            day         = datestamp.strftime("%d")
+            month       = datestamp.strftime("%m")
+            year        = datestamp.strftime("%Y")
+
+            date = day + "-" + month + "-" + year
+
             posts.append({
                 "title": post[1],
                 "content": highlightCode(convertMarkdown(post[2])),
-                "datestamp": post[3],
+                "datestamp": date,
                 "posted": bool(int(post[4]))
             })
         
@@ -129,7 +139,14 @@ def wotw():
 
 
 def convertMarkdown(data):
-    return markdown.markdown(data, extensions=[FencedCodeExtension(), CodeHiliteExtension()])
+    return markdown.markdown(data, extensions=[FencedCodeExtension()])
+
+def getLexer(name):
+
+    #need to split the name first because its formatted like this: language-[language]
+    name = name.split("-")[1]
+    return get_lexer_for_filename(("." + name))
+
 
 def highlightCode(post):
 
@@ -141,7 +158,14 @@ def highlightCode(post):
     # highlight code contained in tags and save to separate list
     highlightedCode = []
     for code in codeTags:
-        highlightedCode.append(highlight(code.text, PythonLexer(), HtmlFormatter())) #TODO add multilexer support
+        
+        # incase the user forgot to specify the code block language in the markdown
+        if code.has_key("class"):
+            lexer = getLexer(code["class"][0])
+        else:
+            lexer = getLexer("language-txt") # if no language is specified use a txt lexer
+
+        highlightedCode.append(highlight(code.text, lexer, HtmlFormatter(linenos=False))) #TODO add multilexer support
     
     #insert formatted code into their own soup objects
     codeSoups = []

@@ -1,15 +1,33 @@
-.k, .kn {
-    color:#e67e22;
+/** plain text **/
+.p {
+    color: #dddddd;
 }
 
-.s2, .sd {
-    color: #27ae60;
+/** python keywords, c# keywords, html attribs **/
+.k, .kn, .na, .nc {
+    color:#ffaf40;
 }
 
-.nb {
-    color: #8e44ad;
+/** strings **/
+.s1, .s2, .sd, .s {
+    color: #3ae374  ;
 }
 
-.c1 {
-   color: #e74c3c; 
+.nb, .n {
+    color: #c56cf0;
+}
+
+/** python comments, css builtins **/
+.nt {
+   color: #ff4d4d; 
+}
+
+/**python comments, html&css comments **/
+.c1, .c {
+    color: #dddddd66;
+}
+
+/**  css classes **/
+.nc {
+    color: #aa6c16;
 }
