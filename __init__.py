@@ -1,9 +1,3 @@
-#TODO
-#   create API for posting
-#   Implement markdown converter
-#________________________________________________________________________
-
-
 #general libs
 from datetime import datetime
 from bs4 import BeautifulSoup, Tag
@@ -29,16 +23,16 @@ from flask import url_for
 from flask import request
 from flask import render_template
 from flask import send_from_directory
+from flask import abort
 
 #mysql libs and setup
 import mysql.connector
 database = mysql.connector.connect(
     host="jackatkins.dev",
-    user="jack",
-    password="F9we7t4f",
+    user="app",
+    password="xLmNN^&099nm>",
     database="site_database",
     autocommit=True,
-    auth_plugin="mysql_native_password"
 )
 cur = database.cursor()
 
@@ -47,7 +41,6 @@ app = Flask(__name__)
 
 # config app
 app.secret_key = "SN1KT4196419662003"
-auth = "Ds9k74t3"
 
 # APP ROUTES
 @app.route("/")
@@ -144,7 +137,7 @@ def project(ID):
     
     # no post found
     else:
-        return redirect(url_for("projects"))
+        abort(404)
 
 
 @app.route("/image/<name>")
@@ -182,6 +175,33 @@ def upload_image():
 def wotw():
     return render_template("wotw.html")
 
+
+# ERROR HANDLING
+@app.errorhandler(404)
+def Error404(e):
+    return render_template(
+        "error.html",
+        error = "404",
+        message = "Sorry, we couldn't find what you were looking for :("
+    )
+
+@app.errorhandler(403)
+def Error403(e):
+    return render_template(
+        "error.html",
+        error = "403",
+        message = "Sorry, you are not allowed to access this resource."
+    )
+
+@app.errorhandler(500)
+def Error505(e):
+    return render_template(
+        "error.html",
+        error = "500",
+        message = "Oops... An internal error has occured."
+    )
+
+# functions
 
 def convertMarkdown(data):
     return markdown.markdown(data, extensions=[FencedCodeExtension()])
@@ -229,4 +249,4 @@ def highlightCode(post):
     return soup
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
