@@ -98,9 +98,54 @@ def projects():
         # put post data into list
         posts = list()
         for post in data:
-            posts.append({"title":post[1], "content":markdown.markdown(post[2]), "datestamp":post[3], "posted":bool(post[4])})
+
+            #format datestamp 
+            datestamp   = post[3]
+            day         = datestamp.strftime("%d")
+            month       = datestamp.strftime("%m")
+            year        = datestamp.strftime("%Y")
+
+            date = day + "-" + month + "-" + year
+
+            posts.append({
+                "ID": str(post[0]),
+                "title": post[1],
+                "content": highlightCode(convertMarkdown(post[2])),
+                "datestamp": date,
+                "posted": bool(int(post[4]))
+            })
 
         return render_template("projects.html", posts=posts)
+
+@app.route("/projects/<ID>/")
+def project(ID):
+
+    # get post from database
+    cur.execute("SELECT * FROM tblProjectPosts WHERE id = " + str(ID)  + " AND posted = 1;")
+    data = cur.fetchone()
+
+    if data != None:
+        #format datestamp 
+        datestamp   = data[3]
+        day         = datestamp.strftime("%d")
+        month       = datestamp.strftime("%m")
+        year        = datestamp.strftime("%Y")
+
+        date = day + "-" + month + "-" + year
+
+        # append data to dict
+        post = {
+            "title":data[1],
+            "content":highlightCode(convertMarkdown(data[2])),
+            "datestamp":date
+        }
+
+        return render_template("project.html", post=post)
+    
+    # no post found
+    else:
+        return redirect(url_for("projects"))
+
 
 @app.route("/image/<name>")
 def image(name):
