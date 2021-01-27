@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+{% block navtitle %}Home{% endblock %}
+
+{% block content %}
+<div class="content-break">
+    <h1>Hello, World!</h1>
+    <p>Hi There! My name is Jack. I work on various personal programming projects. I am quite familiar with Python which is my go-to for most of my projects. However, I also user other languages as well. Mainly web languages like HTML, CSS, JS. But also, C# . As well as programming I also enjoy doing graphic design work, I am familiar with both Photoshop and Illustrator.</p>     
+</div>
+<div class="content-break">
+    <p>Check out some of my projects</p>
+    <a href="{{ url_for('projects') }}"><button class="content-break-tiny">Projects</button></a> 
+</div>
+<div class="content-break">
+    <p>Check out whats happenin' on my blog</p>
+    <a href=" {{ url_for('blog') }} "><button class="content-break-tiny">Blog</button></a>
+</div>
+{% endblock %}
