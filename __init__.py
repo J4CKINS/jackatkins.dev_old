@@ -209,7 +209,8 @@ def convertMarkdown(data):
 def getLexer(name):
 
     #need to split the name first because its formatted like this: language-[language]
-    name = name.split("-")[1]
+    #print("\n\n" + str(name) + "\n\n")
+    #name = name.split("-")[1]
     return get_lexer_for_filename(("." + name))
 
 
