@@ -41,6 +41,7 @@ app = Flask(__name__)
 
 # config app
 app.secret_key = "SN1KT4196419662003"
+api_auth = "TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc2NpbmcgZWxpdC4gU2VkIGV1IGN1cnN1cyBuaXNsLiBWaXZhbXVzIHB1bHZpbmFyIHRlbXBvciBxdWFtIHF1aXMgbHVjdHVzLiBOdWxsYW0gaWQu"
 
 # APP ROUTES
 @app.route("/")
@@ -152,11 +153,11 @@ def upload_image():
     data = json.loads(request.data)
 
     # fetch auth key
-    with open("static/auth/auth.txt", "r") as file:
+    with open("static/auth/auth.txt", "rb") as file:
         auth_key = file.read()
 
     #check if request is authorized
-    if auth_key == data["auth"]:
+    if bcrypt.checkpw(data["auth"].encode(), auth_key):
 
         image_data = base64.b64decode(data["data"]) #decode image data
         
@@ -166,7 +167,7 @@ def upload_image():
         
         return "200"
     
-    return "403"
+    abort(403)
 
 
 
