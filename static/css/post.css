@@ -38,6 +38,10 @@ li {
     text-align: left;
 }
 
+a {
+    color: #28869e;
+}
+
 .post {
     background-color: #1e2329;
     border-radius: 30px;
