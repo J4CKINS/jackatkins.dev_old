@@ -3,4 +3,4 @@ __pycache__/
 *.pyc
 schema.py
 database.db
-
+static/img/*
