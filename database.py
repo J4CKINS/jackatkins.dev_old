@@ -8,9 +8,8 @@ class Database:
     def connect():
         Database.database = mysql.connector.connect(
             host="jackatkins.dev",
-            user="jack",
-            password="F9we7t4f",
-            #password="xLmNN^&099nm>",
+            user="app",
+            password="xLmNN^&099nm>",
             database="site_database",
             autocommit=True,
         )
