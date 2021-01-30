@@ -214,9 +214,19 @@ def convertMarkdown(data):
 def getLexer(name):
 
     #need to split the name first because its formatted like this: language-[language]
-    #print("\n\n" + str(name) + "\n\n")
-    #name = name.split("-")[1]
-    return get_lexer_for_filename(("." + name))
+    try:
+        name = name.split("-")[1]
+        return get_lexer_for_filename(("." + name))
+
+    # for some reason the value of name is sometimes: language-py
+    # and sometimes it is just py
+    # this is handled here
+    except IndexError:
+        return get_lexer_for_filename(("." + name))
+    
+    # if the lexer is not specified in the markdown or cannot be found
+    except:
+        return get_lexer_for_filename(".txt")
 
 
 def highlightCode(post):
@@ -231,7 +241,7 @@ def highlightCode(post):
     for code in codeTags:
         
         # incase the user forgot to specify the code block language in the markdown
-        if code.has_key("class"):
+        if code.has_attr("class"):
             lexer = getLexer(code["class"][0])
         else:
             lexer = getLexer("language-txt") # if no language is specified use a txt lexer
