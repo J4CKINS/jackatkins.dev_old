@@ -157,7 +157,7 @@ def upload_image():
     data = json.loads(request.data)
 
     # fetch auth key
-    with open("static/auth/auth.txt", "rb") as file:
+    with open("auth.txt", "rb") as file:
         auth_key = file.read()
 
     #check if request is authorized
