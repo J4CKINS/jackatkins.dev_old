@@ -25,23 +25,14 @@ from flask import render_template
 from flask import send_from_directory
 from flask import abort
 
-#mysql libs and setup
-import mysql.connector
-database = mysql.connector.connect(
-    host="jackatkins.dev",
-    user="app",
-    password="xLmNN^&099nm>",
-    database="site_database",
-    autocommit=True,
-)
-cur = database.cursor()
+#database class
+from database import Database
 
 # create app object
 app = Flask(__name__)
 
 # config app
 app.secret_key = "SN1KT4196419662003"
-api_auth = "TG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc2NpbmcgZWxpdC4gU2VkIGV1IGN1cnN1cyBuaXNsLiBWaXZhbXVzIHB1bHZpbmFyIHRlbXBvciBxdWFtIHF1aXMgbHVjdHVzLiBOdWxsYW0gaWQu"
 
 # APP ROUTES
 @app.route("/")
@@ -53,9 +44,14 @@ def blog():
     
     if request.method == "GET":
 
+        Database.connect()
+
         # fetch posts from database
-        cur.execute("SELECT * FROM tblBlogPosts ORDER BY timestamp DESC;")
-        data = cur.fetchall()
+        Database.cursor.execute("SELECT * FROM tblBlogPosts ORDER BY timestamp DESC;")
+        data = Database.cursor.fetchall()
+
+        Database.disconnect()
+
         
         # put post data into list
         posts = list()
@@ -85,9 +81,13 @@ def projects():
 
     if request.method == "GET":
 
+        Database.connect()
+
         # fetch posts from database
-        cur.execute("SELECT * FROM tblProjectPosts ORDER BY timestamp DESC;")
-        data = cur.fetchall()
+        Database.cursor.execute("SELECT * FROM tblProjectPosts ORDER BY timestamp DESC;")
+        data = Database.cursor.fetchall()
+
+        Database.disconnect()
     
         # put post data into list
         posts = list()
@@ -114,9 +114,13 @@ def projects():
 @app.route("/projects/<ID>/")
 def project(ID):
 
+    Database.connect()
+
     # get post from database
-    cur.execute("SELECT * FROM tblProjectPosts WHERE id = " + str(ID)  + " AND posted = 1;")
-    data = cur.fetchone()
+    Database.cursor.execute("SELECT * FROM tblProjectPosts WHERE id = " + str(ID)  + " AND posted = 1;")
+    data = Database.cursor.fetchone()
+
+    Database.disconnect()
 
     if data != None:
         #format datestamp 
@@ -199,7 +203,7 @@ def Error505(e):
     return render_template(
         "error.html",
         error = "500",
-        message = "Oops... An internal error has occured."
+        message = "Oops... An internal error has ocDatabase.cursored."
     )
 
 # functions
