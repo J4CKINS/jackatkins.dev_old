@@ -175,9 +175,9 @@ def upload_image():
         image_data = base64.b64decode(data["data"]) #decode image data
         
         #write image data to file
-	filename = data["filename"] + "." + data["format"] 
-        with open(os.path.join(image_path, filename), "w+") as file:
-            file.write(image_data)
+    filename = data["filename"] + "." + data["format"]
+    with open(os.path.join(image_path, filename), "w+") as file:
+        file.write(image_data)
         
         return "200"
     
