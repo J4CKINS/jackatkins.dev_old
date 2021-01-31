@@ -6,6 +6,7 @@ import requests
 import json
 import base64
 import markdown
+import os
 
 #markdown extensions
 from markdown.extensions.fenced_code import FencedCodeExtension
@@ -33,6 +34,14 @@ app = Flask(__name__)
 
 # config app
 app.secret_key = "SN1KT4196419662003"
+
+#FOLDER PATHS
+
+# this is needed because for some reason when the web app is run on apache
+# it is ran at the root directory and not where the python file is
+# which means that none of the resouces can be found
+app_path = os.path.dirname(os.path.realpath(__file__))
+image_path = os.path.join(app_path,"static/img/")
 
 # APP ROUTES
 @app.route("/")
@@ -157,7 +166,7 @@ def upload_image():
     data = json.loads(request.data)
 
     # fetch auth key
-    with open("auth.txt", "rb") as file:
+    with open(os.path.join(app_path, "auth.txt"), "rb") as file:
         auth_key = file.read()
 
     #check if request is authorized
@@ -166,7 +175,8 @@ def upload_image():
         image_data = base64.b64decode(data["data"]) #decode image data
         
         #write image data to file
-        with open(("static/img/" + data["filename"] + "." + data["format"]), "wb") as file:
+	filename = data["filename"] + "." + data["format"] 
+        with open(os.path.join(image_path, filename), "w+") as file:
             file.write(image_data)
         
         return "200"
