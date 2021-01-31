@@ -43,7 +43,6 @@ button:focus {
     float: left;
     text-align: center;
     width: 100%;
-    padding: 0 20% 70px 20%;
 
     opacity: 0;
     padding-top: 15px;
@@ -52,6 +51,16 @@ button:focus {
     -webkit-transition: all ease-in 1s;
     -moz-transition: all ease-in 1s;
     -o-transition: all ease-in 1s;
+}
+.content {
+    margin: auto;
+    width: 1200px;
+    text-align: center;
+}
+@media only screen and (max-width: 1200px) {
+    .content {
+        width: 95%;
+    }
 }
 
 .content-break {    
@@ -87,6 +96,11 @@ nav ul {
     list-style-type: none;
     overflow: hidden;
     margin-right: 30px;
+}
+@media only screen and (max-width: 825px) {
+    nav ul {
+        display: none;
+    }
 }
 
 nav a {

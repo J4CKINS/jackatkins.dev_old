@@ -2,8 +2,10 @@
 <html>
     <head>
         <title>{% block title %}{% endblock %}  |  jackatkins.dev</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/global.css') }}">
+        
         {% block head %}
         {% endblock %}
     </head>
@@ -18,8 +20,10 @@
             </ul>
         </nav>
         <div class="wrapper fadein">
-            {% block content %}
-            {% endblock %}
+            <div class="content">
+                {% block content %}
+                {% endblock %}
+            </div>
         </div>
         <script src="{{ url_for('static', filename='js/fadein.js') }}"></script>
     </body>
