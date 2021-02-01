@@ -3,7 +3,7 @@
     color: #dddddd66;
 }
 
-.py .kn, .k {
+.py .kn, .py .k {
     color:#ffaf40;
 }
 
@@ -19,6 +19,6 @@
     color: #ff4d4d; 
 }
 
-.nb {
+.py .nb {
     color: #c56cf0;
 }
