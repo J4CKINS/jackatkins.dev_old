@@ -1,33 +1,24 @@
-/** plain text **/
-.p {
-    color: #dddddd;
-}
-
-/** python keywords, c# keywords, html attribs **/
-.k, .kn, .na, .nc {
-    color:#ffaf40;
-}
-
-/** strings **/
-.s1, .s2, .sd, .s {
-    color: #3ae374  ;
-}
-
-.nb, .n {
-    color: #c56cf0;
-}
-
-/** python comments, css builtins **/
-.nt {
-   color: #ff4d4d; 
-}
-
-/**python comments, html&css comments **/
-.c1, .c {
+/** PYTHON **/
+.py .c1 {
     color: #dddddd66;
 }
 
-/**  css classes **/
-.nc {
-    color: #aa6c16;
+.py .kn, .k {
+    color:#ffaf40;
+}
+
+.py .s2 {
+    color:#3ae374;
+}
+
+.py .nf {
+    color: #546de5;
+}
+
+.py .bp {
+    color: #ff4d4d; 
+}
+
+.nb {
+    color: #c56cf0;
 }
