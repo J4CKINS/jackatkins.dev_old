@@ -1,24 +1,42 @@
-/** PYTHON **/
-.py .c1 {
+/* PYTHON */
+
+.py .c1, .language-py .c1 {
     color: #dddddd66;
 }
 
-.py .kn, .py .k {
+.py .kn, .py .k, .py .ow, .language-py .kn, .language-py .k, .language-py .ow {
     color:#ffaf40;
 }
 
-.py .s2 {
+.py .s2, .language-py .s2{
     color:#3ae374;
 }
 
-.py .nf {
+.py .nf, .py .nc, .language-py .nf, .language-py .nc {
     color: #546de5;
 }
 
-.py .bp {
+.py .bp, .language-py .bp {
     color: #ff4d4d; 
 }
 
-.py .nb {
+.py .nb, .language-py .nb {
     color: #c56cf0;
+}
+
+/* C# */
+.cs .c1, .language-cs .c1 {
+    color: #dddddd66;
+}
+
+.cs .n, .language-cs .n {
+    color: #00b894;
+}
+
+.cs .k, .language-cs .k {
+    color: #0984e3;
+}
+
+.cs .s, .language-cs .s {
+    color:#e17055;
 }
