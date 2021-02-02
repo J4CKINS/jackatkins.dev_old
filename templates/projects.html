@@ -14,12 +14,10 @@
 </div>
 <div class="content-break">
     {% for post in posts %}
-    {% if post["posted"] %}
         <div class="post">
             <h1 class="post-title">{{ post["title"] }}</h1>
             <a href="{{ post['ID'] }}/"><button>View Project</button></a>
         </div>
-    {% endif %}
     {% endfor %}
 </div>
 {% endblock %}

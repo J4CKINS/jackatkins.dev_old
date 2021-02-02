@@ -56,7 +56,7 @@ def blog():
         Database.connect()
 
         # fetch posts from database
-        Database.cursor.execute("SELECT * FROM tblBlogPosts ORDER BY timestamp DESC;")
+        Database.cursor.execute("SELECT * FROM tblBlogPosts WHERE posted = 1 ORDER BY timestamp DESC;")
         data = Database.cursor.fetchall()
 
         Database.disconnect()
@@ -78,7 +78,6 @@ def blog():
                 "title": post[1],
                 "content": highlightCode(convertMarkdown(post[2])),
                 "datestamp": date,
-                "posted": bool(int(post[4]))
             })
         
 
@@ -93,7 +92,7 @@ def projects():
         Database.connect()
 
         # fetch posts from database
-        Database.cursor.execute("SELECT * FROM tblProjectPosts ORDER BY timestamp DESC;")
+        Database.cursor.execute("SELECT * FROM tblProjectPosts WHERE posted = 1 ORDER BY timestamp DESC;")
         data = Database.cursor.fetchall()
 
         Database.disconnect()
@@ -115,7 +114,6 @@ def projects():
                 "title": post[1],
                 "content": highlightCode(convertMarkdown(post[2])),
                 "datestamp": date,
-                "posted": bool(int(post[4]))
             })
 
         return render_template("projects.html", posts=posts)

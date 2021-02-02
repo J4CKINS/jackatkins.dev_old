@@ -10,7 +10,6 @@
 {% block content %}
 
 {% for post in posts %}
-{% if post["posted"] %}
 <div class="post">
     <div class="head">
         <p class="post-title">{{ post["title"] }}</h1>
@@ -18,7 +17,6 @@
         </div>
     <p class="post-content">{{ post["content"]|safe }}</p>
 </div>
-{% endif %}
 {% endfor %}
 
 {% endblock %}
