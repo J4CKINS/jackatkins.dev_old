@@ -97,11 +97,6 @@ nav ul {
     overflow: hidden;
     margin-right: 30px;
 }
-@media only screen and (max-width: 850px) {
-    nav ul {
-        display: none;
-    }
-}
 
 nav a {
     float: right;
@@ -125,12 +120,82 @@ nav li:hover {
     cursor: pointer;
 }
 
+nav img {
+    display: none;
+    float: right;
+    width: 25px;
+    height: 25px;
+    margin: 5px;
+    margin-right: 20px;
+}
+nav img:hover {
+    cursor: pointer;
+}
+
 /* CUSTOM PURPLE HIGHLIGHT COLOR FOR GITHUB NAV ITEM */
 nav .github:hover {
     background-color: #6e5494;
     color: white;
 }
 
+
+@media only screen and (max-width: 850px) {
+    nav ul {
+        display: none;
+    }
+    nav img {
+        display: block;
+    }
+}
+
+#mobnav {
+    display: none;
+    position: fixed;
+    z-index: 2;
+    float: right;
+    width: 100%;
+    height: 100%;
+    background-color: #000000bb;
+    margin: auto;
+    text-align: right;
+    transition: display 1s;
+}
+
+#mobnav #frame {
+    padding: 0;
+    width:75%;
+    height: 100%;
+    float: right;
+    background-color: #2a2e38;
+    text-align: center; 
+}
+
+#mobnav #frame a {
+    color: white;
+    text-decoration: none;
+}
+
+#mobnav #frame p {
+    width: 100%;
+    padding: 10px 20px 10px 20px;
+}
+
+#mobnav #frame p:hover {
+    transition: background-color ease-in-out .4s;
+    -webkit-transition: background-color ease-in-out .4s;
+    -moz-transition: background-color ease-in-out .4s;
+    -o-transition: background-color ease-in-out .4s;
+
+    background-color: white;
+    color: black;
+    cursor: pointer;
+}
+
+/* CUSTOM PURPLE HIGHLIGHT COLOR FOR GITHUB NAV ITEM */
+#mobnav #frame .github:hover {
+    background-color: #6e5494;
+    color: white;
+}
 
 footer {
     float: left;

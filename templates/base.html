@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>{% block title %}{% endblock %}  |  jackatkins.dev</title>
+        <title>{% block title %}{% endblock %}  -  jackatkins.dev</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/global.css') }}">
@@ -10,8 +10,20 @@
         <script src="{{ url_for('static', filename='js/fadein.js') }}"></script>
     </head>
     <body>
+
+        <div id="mobnav" onclick="closeNav();">
+            <div id="frame">
+                <a href="{{ url_for('home') }}"><p>Home</p></a>
+                <a href="{{ url_for('projects') }}"><p>Projects</p></a>
+                <a href="{{ url_for('blog') }}"><p>What's Happenin'</p></a>
+                <a href="https://github.com/J4CKINS"><p class="github">GitHub</p></a>
+            </div>
+        </div>
+
         <nav>
             <p id="title">jackatkins.dev - {% block navtitle %}{% endblock %}</p>
+            
+            <img src="{{ url_for('static', filename='svg/bars.svg') }}" onclick="openNav();"/>
             <ul>
                 <a href="https://github.com/J4CKINS"><li class="github">GitHub</li></a>
                 <a href="{{ url_for('blog') }}"><li>What's Happenin'</li></a>
@@ -28,5 +40,6 @@
         <footer>
             &copy; Jack Atkins 2021
         </footer>
+        <script src="{{ url_for('static', filename='js/mobile_nav_controller.js') }}"></script>
     </body>
 </html>
