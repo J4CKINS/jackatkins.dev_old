@@ -165,6 +165,7 @@ def image(name):
 @app.route("/upload_image/", methods=["POST"])
 def upload_image():
 
+    accepted_formats = ["png", "jpg", "jpeg", "gif", "bmp", "svg"]
     # get request data
     data = json.loads(request.data)
 
@@ -176,13 +177,16 @@ def upload_image():
     if bcrypt.checkpw(data["auth"].encode(), auth_key):
 
         image_data = base64.b64decode(data["data"]) #decode image data
-        
+
+    if data["format"] in accepted_formats:
         #write image data to file
-    filename = data["filename"] + "." + data["format"]
-    with open(os.path.join(image_path, filename), "w+") as file:
-        file.write(image_data)
-        
-        return "200"
+        filename = data["filename"] + "." + data["format"]
+        with open(os.path.join(image_path, filename), "w+") as file:
+            file.write(image_data)
+            
+            return "200"
+    else:
+        abort(500)
     
     abort(403)
 
