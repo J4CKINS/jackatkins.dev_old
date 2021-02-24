@@ -152,6 +152,11 @@ def project(ID):
         abort(404)
 
 
+@app.route("/image/")
+def images():
+    return render_template("images.html", images=os.listdir(image_path)) 
+
+
 @app.route("/image/<name>")
 def image(name):
     return send_from_directory('static/img', name)
