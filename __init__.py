@@ -1,6 +1,8 @@
 #general libs
 from datetime import datetime
 from bs4 import BeautifulSoup, Tag
+from PIL import Image
+from io import BytesIO
 import bcrypt
 import requests
 import json
@@ -24,6 +26,7 @@ from flask import url_for
 from flask import request
 from flask import render_template
 from flask import send_from_directory
+from flask import send_file
 from flask import abort
 
 #database class
@@ -159,7 +162,14 @@ def images():
 
 @app.route("/image/<name>")
 def image(name):
-    return send_from_directory('static/img', name)
+    width = int(request.args.get('w'))
+    height = int(request.args.get('h'))
+    frmat = name.split(".")[1]
+
+    image = Image.open(image_path + "/" + name)
+    image = image.resize((width,height))
+
+    return servePilImage(image,frmat)
 
 # IMAGE UPLOAD API
 @app.route("/upload_image/", methods=["POST"])
@@ -178,7 +188,7 @@ def upload_image():
 
         image_data = base64.b64decode(data["data"]) #decode image data
 
-    if data["format"] in accepted_formats:
+    if data["format"].lower() in accepted_formats:
         #write image data to file
         filename = data["filename"] + "." + data["format"]
         with open(os.path.join(image_path, filename), "w+") as file:
@@ -220,7 +230,7 @@ def Error505(e):
     return render_template(
         "error.html",
         error = "500",
-        message = "Oops... An internal error has ocDatabase.cursored."
+        message = "Oops... An internal error has occurred"
     )
 
 # functions
@@ -280,6 +290,12 @@ def highlightCode(post):
     
     #and finalyyyyy.... return soup
     return soup
+
+def servePilImage(img, format):
+    imgio = BytesIO()
+    img.save(imgio, format.upper(), quality=70)
+    imgio.seek(0)
+    return send_file(imgio, mimetype='image/' + format.lower())
 
 if __name__ == "__main__":
     app.run()
