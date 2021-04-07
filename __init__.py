@@ -298,4 +298,4 @@ def servePilImage(img, format):
     return send_file(imgio, mimetype='image/' + format.lower())
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0')
