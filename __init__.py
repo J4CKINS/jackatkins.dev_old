@@ -30,7 +30,28 @@ from flask import send_file
 from flask import abort
 
 #database class
-from database import Database
+import mysql.connector
+class Database:
+
+    database = None
+    cursor = None
+
+    @staticmethod
+    def connect():
+        Database.database = mysql.connector.connect(
+            host="jackatkins.dev",
+            user="app",
+            password="xLmNN^&099nm>",
+            database="site_database",
+            autocommit=True,
+        )
+        Database.cursor = Database.database.cursor()
+
+    @staticmethod
+    def disconnect():
+        if Database.database:
+            Database.database.close()
+            Database.cursor.close()
 
 # create app object
 app = Flask(__name__)
