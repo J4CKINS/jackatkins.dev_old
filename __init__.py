@@ -42,7 +42,7 @@ class Database:
             host="jackatkins.dev",
             user="app",
             password="xLmNN^&099nm>",
-            database="site_database",
+            database="jackatkins_dev",
             autocommit=True,
         )
         Database.cursor = Database.database.cursor()
@@ -80,7 +80,7 @@ def blog():
         Database.connect()
 
         # fetch posts from database
-        Database.cursor.execute("SELECT * FROM tblBlogPosts WHERE posted = 1 ORDER BY timestamp DESC;")
+        Database.cursor.execute("SELECT * FROM tblBlogPosts WHERE posted = 1 ORDER BY datestamp DESC;")
         data = Database.cursor.fetchall()
 
         Database.disconnect()
@@ -116,7 +116,7 @@ def projects():
         Database.connect()
 
         # fetch posts from database
-        Database.cursor.execute("SELECT * FROM tblProjectPosts WHERE posted = 1 ORDER BY timestamp DESC;")
+        Database.cursor.execute("SELECT * FROM tblProjectPosts WHERE posted = 1 ORDER BY datestamp DESC;")
         data = Database.cursor.fetchall()
 
         Database.disconnect()
