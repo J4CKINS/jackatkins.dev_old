@@ -42,6 +42,7 @@ class Database:
             host="jackatkins.dev",
             user="app",
             password="xLmNN^&099nm>",
+            auth_plugin="mysql_native_password",
             database="jackatkins_dev",
             autocommit=True,
         )
