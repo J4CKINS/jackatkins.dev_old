@@ -12,6 +12,11 @@ body {background-color: #2a2e38;}
 h1 {
     font-size: 50px;
 }
+@media only screen and (max-width: 400px) {
+    h1 {
+        font-size: 35px;
+    }
+}
 
 p {
     font-size: 20px;
@@ -145,6 +150,10 @@ nav .github:hover {
     }
     nav img {
         display: block;
+    }
+    nav p {
+        font-size: 20px;
+        margin-left: 10px;
     }
 }
 
