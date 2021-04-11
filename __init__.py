@@ -184,14 +184,42 @@ def images():
 
 @app.route("/image/<name>")
 def image(name):
-    width = int(request.args.get('w'))
-    height = int(request.args.get('h'))
-    frmat = name.split(".")[1]
+    
+    # clamp is a function that is used to keep a value within a specified range
+    # this is used for the URL args because PIL doesnt accept numbers (<=0)
+    # I have written this as a lambda function as it looks cleaner
+    clamp = lambda val,minimum,maximum : max(minimum, min(val, maximum))
 
-    image = Image.open(image_path + "/" + name)
-    image = image.resize((width,height))
+    scale = 1 #define scale variable
+    
+    try:
+        image = Image.open(image_path + "/" + name) # try to find image file
+    except FileNotFoundError:
+        abort(404) # if the image could not be found, throw a 404 request error
+    
+    width, height = image.size
 
-    return servePilImage(image,frmat)
+    # check if width arg is specified in request
+    if request.args.get('w'):
+        width = int(request.args.get ('w')) # get width
+        width = clamp(width, 1, 5000) # clamp
+    
+    # check if height arg is specified in request
+    if request.args.get('h'):
+        height = int(request.args.get('h')) # get height
+        height = clamp(height, 1, 5000) # clamp
+
+    if request.args.get('scale'):
+        scale = float(request.args.get('scale')) # get scale
+        scale = clamp(scale, 0.01, 5) # clamp
+
+    frmat = name.split(".")[1] # get file format 
+    image = image.resize((width,height)) # resize the image
+
+    image = image.resize((int(width*scale), int(height*scale))) # scale the image
+
+    return servePilImage(image,frmat) # serve the image to the user
+
 
 # IMAGE UPLOAD API
 @app.route("/upload_image/", methods=["POST"])
