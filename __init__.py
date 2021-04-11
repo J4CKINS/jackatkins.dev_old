@@ -66,7 +66,7 @@ app.secret_key = "SN1KT4196419662003"
 # it is ran at the root directory and not where the python file is
 # which means that none of the resouces can be found
 app_path = os.path.dirname(os.path.realpath(__file__))
-image_path = os.path.join(app_path,"static/img/")
+image_path = os.path.join(app_path,"static/uploads/")
 
 # APP ROUTES
 @app.route("/")
@@ -241,7 +241,7 @@ def upload_image():
     if data["format"].lower() in accepted_formats:
         #write image data to file
         filename = data["filename"] + "." + data["format"]
-        with open(os.path.join(image_path, filename), "w+") as file:
+        with open(os.path.join(image_path, filename), "wb") as file:
             file.write(image_data)
             
             return "200"
