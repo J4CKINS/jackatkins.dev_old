@@ -179,11 +179,38 @@ def project(ID):
 
 @app.route("/image/")
 def images():
-    return render_template("images.html", images=os.listdir(image_path)) 
+    if request.args.get("format") == "json":
+        return json.dumps(getDirList(image_path))
+    return render_template("images.html", html=dirTreeToHTML(getDirList(image_path), "")) 
 
+def getDirList(directory):
+    tree = {"images":[], "folders":{}}
+    for file in os.listdir(directory):
+        # test if element is a file
+        if "." in file:
+            tree["images"].append(file)
+        else:
+            tree["folders"][str("/" + file)] = getDirList(directory + "/" + file)
+    return tree
 
-@app.route("/image/<name>")
-def image(name):
+# used to convert JSON dir tree to an HTML format
+# wanted to avoid using flask code for this so I made the function here
+def dirTreeToHTML(tree, parent_dir):
+    html = """<ul>"""
+    directory = parent_dir
+    for image in tree["images"]:
+        html += "\n<a href='/image" + directory + "/" + image + "'><li>" + image + "</li></a>"
+
+    for folder in tree["folders"]:
+        html += "\n<b><h2>" + folder + "</h2></b>"
+        html += dirTreeToHTML(tree["folders"][folder], directory + folder)
+    
+    html += "\n</ul>"
+
+    return html
+
+@app.route("/image/<path:path>")
+def image(path):
     
     # clamp is a function that is used to keep a value within a specified range
     # this is used for the URL args because PIL doesnt accept numbers (<=0)
@@ -193,7 +220,7 @@ def image(name):
     scale = 1 #define scale variable
     
     try:
-        image = Image.open(image_path + "/" + name) # try to find image file
+        image = Image.open(image_path + "/" + path) # try to find image file
     except FileNotFoundError:
         abort(404) # if the image could not be found, throw a 404 request error
     
@@ -213,19 +240,24 @@ def image(name):
         scale = float(request.args.get('scale')) # get scale
         scale = clamp(scale, 0.01, 5) # clamp
 
-    frmat = name.split(".")[1] # get file format 
+    frmat = path.split(".")[1] # get file format 
     image = image.resize((width,height)) # resize the image
 
     image = image.resize((int(width*scale), int(height*scale))) # scale the image
 
     return servePilImage(image,frmat) # serve the image to the user
 
+def servePilImage(img, format):
+    imgio = BytesIO()
+    img.save(imgio, format.upper(), quality=70)
+    imgio.seek(0)
+    return send_file(imgio, mimetype='image/' + format.lower())
 
 # IMAGE UPLOAD API
 @app.route("/upload_image/", methods=["POST"])
 def upload_image():
 
-    accepted_formats = ["png", "jpg", "jpeg", "gif", "bmp", "svg"]
+    accepted_formats = ["png", "jpeg", "bmp", "svg"]
     # get request data
     data = json.loads(request.data)
 
@@ -285,9 +317,11 @@ def Error505(e):
 
 # functions
 
+# MARKDOWN CONVERTER
 def convertMarkdown(data):
     return markdown.markdown(data, extensions=[FencedCodeExtension()])
 
+# CODE HIGHLIGHTING
 def getLexer(name):
 
     #need to split the name first because its formatted like this: language-[language]
@@ -341,11 +375,5 @@ def highlightCode(post):
     #and finalyyyyy.... return soup
     return soup
 
-def servePilImage(img, format):
-    imgio = BytesIO()
-    img.save(imgio, format.upper(), quality=70)
-    imgio.seek(0)
-    return send_file(imgio, mimetype='image/' + format.lower())
-
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', debug=True)
