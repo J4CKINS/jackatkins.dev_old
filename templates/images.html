@@ -1,9 +1,5 @@
 <html>
     <body>
-        <ul>
-        {% for image in images %}
-            <li><a href="{{ image }}">{{ image }}</a></li>
-        {% endfor %}
-        </ul>
+            {{ html|safe }}
     </body>
 </html>
