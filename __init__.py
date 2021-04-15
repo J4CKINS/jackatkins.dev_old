@@ -54,6 +54,14 @@ class Database:
             Database.database.close()
             Database.cursor.close()
 
+    @staticmethod
+    def formatDatestamp(datestamp):
+        day     = datestamp.strftime("%d")
+        month   = datestamp.strftime("%m")
+        year    = datestamp.strftime("%Y")
+        return day, month, year
+
+
 # create app object
 app = Flask(__name__)
 
@@ -92,13 +100,8 @@ def blog():
         for post in data:
 
             #format datestamp
-            datestamp   = post[3]
-            day         = datestamp.strftime("%d")
-            month       = datestamp.strftime("%m")
-            year        = datestamp.strftime("%Y")
-
+            day, month, year = Database.formatDatestamp(post[3])
             date = day + "-" + month + "-" + year
-
             posts.append({
                 "title": post[1],
                 "content": highlightCode(convertMarkdown(post[2])),
@@ -127,11 +130,7 @@ def projects():
         for post in data:
 
             #format datestamp 
-            datestamp   = post[3]
-            day         = datestamp.strftime("%d")
-            month       = datestamp.strftime("%m")
-            year        = datestamp.strftime("%Y")
-
+            day, month, year = Database.formatDatestamp(post[3])
             date = day + "-" + month + "-" + year
 
             posts.append({
