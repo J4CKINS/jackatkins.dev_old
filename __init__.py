@@ -291,7 +291,7 @@ def wotw():
 #ROBOTS
 @app.route("/robots.txt")
 def robots():
-    return send_file(app_path + "\\robots.txt")
+    return send_file(app_path + "/robots.txt")
 
 # ERROR HANDLING
 @app.errorhandler(404)
