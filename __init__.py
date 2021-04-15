@@ -289,6 +289,10 @@ def upload_image():
 def wotw():
     return render_template("wotw.html")
 
+#ROBOTS
+@app.route("/robots.txt")
+def robots():
+    return send_file(app_path + "\\robots.txt")
 
 # ERROR HANDLING
 @app.errorhandler(404)
