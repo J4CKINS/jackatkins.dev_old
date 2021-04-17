@@ -189,7 +189,7 @@ def getDirList(directory):
         if "." in file:
             tree["images"].append(file)
         else:
-            tree["folders"][str("/" + file)] = getDirList(directory + "/" + file)
+            tree["folders"][str(file + "/")] = getDirList(directory + "/" + file)
     return tree
 
 # used to convert JSON dir tree to an HTML format
@@ -260,28 +260,91 @@ def upload_image():
     # get request data
     data = json.loads(request.data)
 
-    # fetch auth key
-    with open(os.path.join(app_path, "auth.txt"), "rb") as file:
-        auth_key = file.read()
-
     #check if request is authorized
-    if bcrypt.checkpw(data["auth"].encode(), auth_key):
-
+    if authValid(data["auth"]):
         image_data = base64.b64decode(data["data"]) #decode image data
 
-    if data["format"].lower() in accepted_formats:
-        #write image data to file
-        filename = data["filename"] + "." + data["format"]
-        with open(os.path.join(image_path, filename), "wb") as file:
-            file.write(image_data)
-            
-            return "200"
-    else:
-        abort(500)
+        if data["format"].lower() in accepted_formats:
+            #write image data to file
+            filename = data["filename"] + "." + data["format"]
+            with open(os.path.join(image_path, data["dir"], filename), "wb") as file:
+                file.write(image_data)
+                
+                return "200"
+        else:
+            abort(500)
     
     abort(403)
 
+@app.route("/delete_image/", methods=["POST"])
+def delete_image():
+    data = json.loads(request.data)
+    directory = data["dir"]
 
+    try:
+        if directory[0] == "/" or directory[0] == "\\":
+            directory = directory[1:]
+    except IndexError:pass
+
+    image = os.path.join(image_path, directory)
+
+    if authValid(data["auth"]):
+        os.remove(image)
+        return "200"
+    abort(403)
+
+@app.route("/delete_folder/", methods=["POST"])
+def delete_folder():
+    data = json.loads(request.data)
+    directory = data["dir"]
+
+    try:
+        if directory[0] == "/" or directory[0] == "\\":
+            directory = directory[1:]
+    except IndexError:pass
+
+    folder = os.path.join(image_path, directory)
+
+    if authValid(data["auth"]):
+        deleteFolderContents(folder)
+        os.rmdir( os.path.join(image_path, directory) )
+        return "200"
+    abort(403)
+
+def deleteFolderContents(directory):
+    for item in os.listdir(directory):
+
+        # if item is a file
+        if os.path.isfile( os.path.join(image_path, directory, item) ):
+            os.remove(os.path.join(image_path, directory, item))
+        
+        # if item is a folder, recusively delete everything inside the folder and then the folder itself
+        elif os.path.isdir( os.path.join(image_path, directory, item) ):
+            deleteFolderContents(os.path.join(image_path, directory, item))
+            os.rmdir( os.path.join(image_path, directory, item) )
+
+@app.route("/create_folder/", methods=["POST"])
+def create_folder():
+    data = json.loads(request.data)
+    dirName = data["dir"]
+    try:
+        if dirName[0] == "/" or dirName[0] == "\\":
+            dirName = dirName[1:]
+    except IndexError:pass
+
+    folderPath = os.path.join(image_path, dirName)
+
+    if authValid(data["auth"]):
+        os.makedirs(folderPath)
+        return "200"
+    abort(403)
+
+def authValid(auth):
+    # fetch auth key
+    with open(os.path.join(app_path, "auth.txt"), "rb") as file:
+        auth_key = file.read()
+    
+    return bcrypt.checkpw(auth.encode(), auth_key)
 
 #WOTW
 @app.route("/emma/")
@@ -311,7 +374,7 @@ def Error403(e):
     )
 
 @app.errorhandler(500)
-def Error505(e):
+def Error500(e):
     return render_template(
         "error.html",
         error = "500",
@@ -379,4 +442,4 @@ def highlightCode(post):
     return soup
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', debug=True)
