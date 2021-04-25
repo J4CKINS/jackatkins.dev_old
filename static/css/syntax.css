@@ -40,3 +40,12 @@
 .cs .s, .language-cs .s {
     color:#e17055;
 }
+
+/* JSON */
+.json .nt, .language-json .nt {
+    color: #0984e3;
+}
+
+.json .s2, .language-json .s2 {
+    color: #74b9ff;
+}
