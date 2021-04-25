@@ -19,6 +19,7 @@ code {
 
 img {
     text-align: center;
+    max-width: 100%;
 }
 
 pre span {
@@ -33,13 +34,20 @@ a {
     color: #28869e;
 }
 
-.post {
+.post-container {
     background-color: #1e2329;
     border-radius: 30px;
     padding: 10px 10px;
     margin-top: 30px;
+    width: 100%;
+    float: left;
+}
+
+.post {
     float: left;
     width: 100%;
+    height: 500px;
+    overflow: hidden;
 }
 
 .post h1 {
@@ -92,4 +100,14 @@ a {
     float: left;
     font-style: italic;
     font-size: 15px;
+}
+
+.expand {
+    float: right;
+    margin-top: 10px;
+    margin-right: 20px;
+}
+.expand:hover {
+    cursor: pointer;
+    text-decoration: underline;
 }
