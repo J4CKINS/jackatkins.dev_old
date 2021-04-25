@@ -61,7 +61,6 @@ class Database:
         year    = datestamp.strftime("%Y")
         return day, month, year
 
-
 # create app object
 app = Flask(__name__)
 
@@ -102,11 +101,12 @@ def blog():
             #format datestamp
             day, month, year = Database.formatDatestamp(post[3])
             date = day + "-" + month + "-" + year
-            posts.append({
-                "title": post[1],
-                "content": highlightCode(convertMarkdown(post[2])),
-                "datestamp": date,
-            })
+            posts.append([
+                post[0],
+                post[1],
+                highlightCode(convertMarkdown(post[2])),
+                date,
+            ])
         
 
         return render_template("blog.html", posts=posts)
