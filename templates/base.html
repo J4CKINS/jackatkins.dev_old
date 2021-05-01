@@ -9,6 +9,13 @@
         {% block head %}
         {% endblock %}
         <script src="{{ url_for('static', filename='js/fadein.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/load.js') }}"></script>
+        <script>
+            load([
+                fadein,
+                {% block callbacks %}{% endblock %}
+            ]);
+        </script>
     </head>
     <body>
 

@@ -5,6 +5,7 @@
 
 {% block head %}
 <script src="{{ url_for('static', filename='js/title_animation.js') }}"></script>
+{% block callbacks %}startAnimation{% endblock %}
 {% endblock %}
 
 {% block content %}
