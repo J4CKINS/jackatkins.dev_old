@@ -5,7 +5,6 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/post.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/syntax.css') }}">
 <script src="{{ url_for('static', filename='js/expand.js') }}"></script>
-{% block callbacks %}setExpandControls{% endblock %}
 {% endblock %}
 
 {% block navtitle %}Blog{% endblock %}
@@ -23,4 +22,6 @@
     <p class="expand" id="expand-{{ post[0] }}" onclick="expand('{{ post[0] }}');">Show More</p>
 </div>
 {% endfor %}
+
+<p id="callbacks">{% block callbacks %}setExpandControls{% endblock %}</p>
 {% endblock %}

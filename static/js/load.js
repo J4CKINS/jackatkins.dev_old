@@ -3,5 +3,6 @@ function load(callbacks) {
         for (i = 0 ; i < callbacks.length ; i++) {
             callbacks[i]();
         }
+        document.getElementById("callbacks").remove();
     }
 }
