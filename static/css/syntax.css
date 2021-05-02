@@ -49,3 +49,20 @@
 .json .s2, .language-json .s2 {
     color: #74b9ff;
 }
+
+/* JavaScript */
+.js .s2, .language-js .s2 {
+    color: #3ae374;
+}
+
+.js .s1, .language-js .s1 {
+    color: #3ae374;
+}
+
+.js .kd, .language-js .kd {
+    color: #0971c0;
+}
+
+.js .nx, .language-js .nx {
+    color: #74b9ff;
+}
