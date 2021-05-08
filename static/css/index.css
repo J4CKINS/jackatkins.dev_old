@@ -1,0 +1,28 @@
+#language-icons img {
+    width: 50px;
+    margin: 0px 5px;
+    background-color: #00000044;
+    border-radius: 10px;
+    padding: 5px;
+    transition: all ease-in-out .2s;
+}
+
+#language-icons img:hover {
+    background-color: #ffffff22;
+    padding: 2px;
+}
+
+#description-box {
+    overflow: hidden;
+    background-color: #0e1013dd;
+    padding: 5px;
+    border-radius: 10px;
+    width: 100%;
+    white-space: nowrap;
+}
+
+#box-container {
+    width: fit-content;
+    margin: 10px auto;
+    text-align: center;
+}
