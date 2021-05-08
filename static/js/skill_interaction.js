@@ -30,9 +30,9 @@ function expandAnimation(element) {
         }
         else {
 
-            let windowWidth = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-
-            if (element.offsetWidth > windowWidth) {
+            let windowWidth = Math.max(document.documentElement.clientWidth || 0, window.outerWidth || 0);
+            
+            if ((element.clientWidth + 10) > windowWidth) {
                 element.style.width = "100%";
                 element.style.whiteSpace = "normal"
             }
