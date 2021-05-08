@@ -4,6 +4,7 @@
 {% block navtitle %}Home{% endblock %}
 
 {% block head %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
 <script src="{{ url_for('static', filename='js/title_animation.js') }}"></script>
 {% endblock %}
 
@@ -11,6 +12,20 @@
 <div class="content-break">
     <h1 id="page-title"></h1>
     <p>Hi There! My name is Jack. I work on various personal programming projects. I am quite familiar with Python which is my go-to for most of my projects. However, I also use other languages as well. Mainly web languages like HTML, CSS, JS. But also, C# . As well as programming I also enjoy doing graphic design work, I am familiar with both Photoshop and Illustrator.</p>     
+</div>
+<div class="content-break">
+    <h1>Skills</h1>
+    <div id="language-icons">
+        <img src="{{ url_for('static', filename='svg/skills/python.svg') }}" onmouseover="showDescription(event, 'Python: 7 years of experience')" onmouseout="deleteBox()"/>
+        <img src="{{ url_for('static', filename='svg/skills/flask.svg') }}" onmouseover="showDescription(event, 'Experience with flask web app development')" onmouseout="deleteBox()"/>
+        <img src="{{ url_for('static', filename='svg/skills/html.svg') }}" onmouseover="showDescription(event, 'HTML: 6 Years of experience')" onmouseout="deleteBox()"/>
+        <img src="{{ url_for('static', filename='svg/skills/css.svg') }}" onmouseover="showDescription(event, 'CSS: 6 Years of experience')" onmouseout="deleteBox()"/>
+        <img src="{{ url_for('static', filename='svg/skills/javascript.svg') }}" onmouseover="showDescription(event, 'JavaScript: Experience with both node and vanilla')" onmouseout="deleteBox()"/>
+        <img src="{{ url_for('static', filename='svg/skills/csharp.svg') }}" onmouseover="showDescription(event, 'C#: experience in WPF app development')" onmouseout="deleteBox()"/>
+        <img src="{{ url_for('static', filename='svg/skills/mysql.svg') }}" onmouseover="showDescription(event, 'Good knowlege of MySQL')" onmouseout="deleteBox()"/>
+        <img src="{{ url_for('static', filename='svg/skills/git.svg') }}" onmouseover="showDescription(event, 'Good knowlege of Git source control')" onmouseout="deleteBox()"/>
+    </div>
+    <div id="box-container"></div>
 </div>
 <div class="content-break">
     <p>Check out some of my projects</p>
@@ -21,4 +36,5 @@
     <a href=" {{ url_for('blog') }} "><button class="content-break-tiny">Blog</button></a>
 </div>
 <p id="callbacks">{% block callbacks %}startAnimation{% endblock %}</p>
+<script src="{{ url_for('static', filename='js/skill_interaction.js') }}"></script>
 {% endblock %}
