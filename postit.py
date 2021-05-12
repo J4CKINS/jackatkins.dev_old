@@ -46,10 +46,12 @@ def authenticateUser(username, password):
     data = Database.getUserAccount(username)
     Database.disconnect()
 
-    # check if password entered matched password hash stored on database
-    if bcrypt.checkpw(password.encode(), data[2].encode()):
-        session['auth'] = genToken(data[0]) # Gen a new token for the user and save to session data
-        return True # return that authentication was successful
+    # check if any data has been found
+    if data:
+        # check if password entered matched password hash stored on database
+        if bcrypt.checkpw(password.encode(), data[2].encode()):
+            session['auth'] = genToken(data[0]) # Gen a new token for the user and save to session data
+            return True # return that authentication was successful
 
     return False # authentication was not successful
 
