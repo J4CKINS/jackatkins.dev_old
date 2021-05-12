@@ -30,40 +30,14 @@ from flask import send_from_directory
 from flask import send_file
 from flask import abort
 
-#database class
-import mysql.connector
-class Database:
+from database import Database
 
-    database = None
-    cursor = None
-
-    @staticmethod
-    def connect():
-        Database.database = mysql.connector.connect(
-            host="jackatkins.dev",
-            user="app",
-            password="xLmNN^&099nm>",
-            auth_plugin="mysql_native_password",
-            database="jackatkins_dev",
-            autocommit=True,
-        )
-        Database.cursor = Database.database.cursor()
-
-    @staticmethod
-    def disconnect():
-        if Database.database:
-            Database.database.close()
-            Database.cursor.close()
-
-    @staticmethod
-    def formatDatestamp(datestamp):
-        day     = datestamp.strftime("%d")
-        month   = datestamp.strftime("%m")
-        year    = datestamp.strftime("%Y")
-        return day, month, year
+#PostIT API
+from postit import postit
 
 # create app object
 app = Flask(__name__)
+app.register_blueprint(postit, url_prefix="")
 
 # config app
 app.secret_key = uuid.uuid4()
