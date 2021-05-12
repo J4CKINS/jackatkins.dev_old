@@ -28,3 +28,8 @@ class Database:
         month   = datestamp.strftime("%m")
         year    = datestamp.strftime("%Y")
         return day, month, year
+
+    @staticmethod
+    def getUserAccount(username):
+        Database.cursor.execute('SELECT * FROM tblUsers WHERE user=%s;', (username,))
+        return Database.cursor.fetchone()
