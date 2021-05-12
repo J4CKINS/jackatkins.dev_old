@@ -9,6 +9,7 @@ import json
 import base64
 import markdown
 import os
+import uuid
 
 #markdown extensions
 from markdown.extensions.fenced_code import FencedCodeExtension
@@ -65,7 +66,7 @@ class Database:
 app = Flask(__name__)
 
 # config app
-app.secret_key = "SN1KT4196419662003"
+app.secret_key = uuid.uuid4()
 
 #FOLDER PATHS
 
