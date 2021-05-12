@@ -40,7 +40,7 @@ app = Flask(__name__)
 app.register_blueprint(postit, url_prefix="")
 
 # config app
-app.secret_key = uuid.uuid4()
+app.secret_key = str(uuid.uuid4()).encode()
 
 #FOLDER PATHS
 
