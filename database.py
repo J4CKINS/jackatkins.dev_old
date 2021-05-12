@@ -33,3 +33,8 @@ class Database:
     def getUserAccount(username):
         Database.cursor.execute('SELECT * FROM tblUsers WHERE user=%s;', (username,))
         return Database.cursor.fetchone()
+    
+    @staticmethod
+    def updateUserToken(userID, token):
+        Database.connect()
+        Database.cursor.execute('UPDATE tblUsers SET token=%s WHERE id=%s;', (token, userID))
