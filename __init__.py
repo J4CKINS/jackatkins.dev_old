@@ -440,11 +440,3 @@ def highlightCode(post):
     
     #and finalyyyyy.... return soup
     return soup
-
-@app.route('/', subdomain='postit')
-def postit():
-    return "<h1>Hello, World!</h1>"
-
-if __name__ == "__main__":
-    app.config['SERVER_NAME'] = 'jackatkins.test:80'
-    app.run(debug=True)
