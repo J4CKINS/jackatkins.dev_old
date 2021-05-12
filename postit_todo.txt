@@ -1,0 +1,45 @@
+---------- UI ----------
+- Login
+
+- Posts Dashboard
+	New
+	Edit
+	Delete
+	Table [Title, Posted?]
+
+- Post Editor
+	Title
+	Content
+	Posted?
+	Post Button
+	Button to Image dashboard
+
+- Image Dashboard
+	Table [Image, Type]
+	Buttons [
+		Upload image
+		Delete image
+		Create folder
+		Delete folder
+		Copy image path
+	]
+
+---------- API ----------
+Blog
+	Get posts (all) GET
+	Get post (one) GET
+	Delete  POST
+	Edit post POST
+
+Project
+	Get posts (all) GET
+	Get post (one) GET
+	Delete post POST
+	Edit post POST
+
+Image
+	Get images and folders GET
+	Upload image POST
+	Delete image POST
+	Create folder POST
+	Delete folder POST
