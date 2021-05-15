@@ -10,6 +10,7 @@ from flask import abort
 from flask import session
 
 from database import Database
+from guard import Guard
 
 postit = Blueprint(
     'postit',
@@ -23,39 +24,31 @@ postit = Blueprint(
 
 @postit.route("/")
 def home():
-    if 'auth' in session:
-        return "dashboard"
-    else:
-        return redirect(url_for("postit.login"))
+    
+    if 'auth' in session and 'id' in session:
+        if Guard.authenticateUserToken(session['id'], session['auth']):
+            return "dashboard"
+
+    return redirect(url_for("postit.login"))
 
 @postit.route("/login/", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
         return render_template("postit/login.html")
+    
+    # Handle post request
     else:
-        if authenticateUser(request.form['user'], request.form['password']):
-            return redirect(url_for("postit.home"))
+        auth = Guard.authenticateUser(
+            request.form['user'],
+            request.form['password']
+        )
 
-        return redirect(url_for("home"))
+        if auth:
+            session['id'] = auth[0]
+            session['auth'] = auth[1]
 
+            
 
-# Functions
-def authenticateUser(username, password):
-    # Get user account data from database
-    Database.connect()
-    data = Database.getUserAccount(username)
-    Database.disconnect()
+            return redirect(url_for('postit.home'))
 
-    # check if any data has been found
-    if data:
-        # check if password entered matched password hash stored on database
-        if bcrypt.checkpw(password.encode(), data[2].encode()):
-            session['auth'] = genToken(data[0]) # Gen a new token for the user and save to session data
-            return True # return that authentication was successful
-
-    return False # authentication was not successful
-
-def genToken(userID):
-    token = str(uuid.uuid4())
-    Database.updateUserToken(userID, token)
-    return token
+        return redirect(url_for("home")) # if user cannot be authenticated, redirect to home page
