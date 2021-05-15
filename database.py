@@ -50,3 +50,29 @@ class Database:
         data = Database.cursor.fetchone()
         Database.disconnect()
         return data[0]
+
+    @staticmethod
+    def getBlogPosts(postedOnly=False):
+        Database.connect()
+        if postedOnly:
+            Database.cursor.execute('SELECT * FROM tblBlogPosts WHERE posted=1 ORDER BY datestamp DESC')
+        else:
+            Database.cursor.execute('SELECT * FROM tblBlogPosts ORDER BY datestamp DESC')
+        
+        data = Database.cursor.fetchall()
+        Database.disconnect()
+
+        return data
+
+    @staticmethod
+    def getProjectPosts(postedOnly=False):
+        Database.connect()
+        if postedOnly:
+            Database.cursor.execute('SELECT * FROM tblProjectPosts WHERE posted=1 ORDER BY datestamp DESC')
+        else:
+            Database.cursor.execute('SELECT * FROM tblProjectPosts ORDER BY datestamp DESC')
+        
+        data = Database.cursor.fetchall()
+        Database.disconnect()
+
+        return data
