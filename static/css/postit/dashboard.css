@@ -11,12 +11,7 @@ th {
 a {
     cursor: pointer;
     padding: 5px;
-}
-
-a:hover {
-    background-color: #0e1013;
-    border-radius: 10px;
-    transition: all ease-in-out .2s;
+    text-decoration: none;
 }
 
 tr:nth-child(even) {
