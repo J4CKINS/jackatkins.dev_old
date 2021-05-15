@@ -27,7 +27,7 @@ def home():
     
     if 'auth' in session and 'id' in session:
         if Guard.authenticateUserToken(session['id'], session['auth']):
-            return "dashboard"
+            return render_template('postit/dashboard.html')
 
     return redirect(url_for("postit.login"))
 
