@@ -32,12 +32,21 @@ class Database:
     @staticmethod
     def getUserAccount(username):
         Database.connect()
-        data = Database.cursor.execute('SELECT * FROM tblUsers WHERE user=%s;', (username,))
+        Database.cursor.execute('SELECT * FROM tblUsers WHERE user=%s;', (username,))
+        data = Database.cursor.fetchone()
         Database.disconnect()
-        return data.cursor.fetchone()
+        return data
     
     @staticmethod
     def updateUserToken(userID, token):
         Database.connect()
         Database.cursor.execute('UPDATE tblUsers SET token=%s WHERE id=%s;', (token, userID))
         Database.disconnect()
+
+    @staticmethod
+    def getUserToken(userID):
+        Database.connect()
+        Database.cursor.execute('SELECT token FROM tblUsers WHERE id=%s;', (userID,))
+        data = Database.cursor.fetchone()
+        Database.disconnect()
+        return data[0]
