@@ -1,0 +1,48 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: #00000055 10px 10px 10px;
+}
+
+th {
+    padding: 10px;
+}
+
+a {
+    cursor: pointer;
+    padding: 5px;
+}
+
+a:hover {
+    background-color: #0e1013;
+    border-radius: 10px;
+    transition: all ease-in-out .2s;
+}
+
+tr:nth-child(even) {
+    background-color: #272a33;
+}
+
+tr:nth-child(odd) {
+    background-color: #1e2329;
+}
+
+#row-titles {
+    background-color: #0e1013;
+}
+
+.title {
+    text-align: left;
+}
+
+.edit a {
+    color: #487eb0;
+}
+
+.delete a {
+    color: #c23616;
+}
+
+button {
+    margin: 20px;
+}

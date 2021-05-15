@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block navtitle %}PostIt Dashboard{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/postit/dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+<h1>Dashboard</h1>
+<table>
+    <tr id="row-titles">
+        <th class="id">ID</th>
+        <th class="title">Title</th>
+        <th class="posted">Posted?</th>
+        <th></th>
+        <th></th>
+    </tr>
+    {% for post in posts %}
+    <tr>
+        <th class="id">{{ post[0] }}</th>
+        <th class="title">{{ post[1] }}</th>
+        <th class="posted">{{ post[4] }}</th>
+        <th class="edit"><a>Edit</a></th>
+        <th class="delete"><a>Delete</a></th>
+    </tr>
+    {% endfor %}
+</table>
+<button>Create Post</button>
+{% endblock %}

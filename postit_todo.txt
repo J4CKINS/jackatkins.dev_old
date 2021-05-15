@@ -2,10 +2,11 @@
 - Login /
 
 - Posts Dashboard
-	New
-	Edit
-	Delete
-	Table [Title, Posted?]
+	New /
+	Edit /
+	Delete /
+	Table [Title, Posted?] /
+	Add links to post editor
 
 - Post Editor
 	Title
