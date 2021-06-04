@@ -41,6 +41,7 @@ a {
     margin-top: 30px;
     width: 100%;
     float: left;
+    box-shadow: #00000055 10px 10px 10px;
 }
 
 .post {
