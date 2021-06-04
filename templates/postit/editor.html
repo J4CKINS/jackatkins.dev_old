@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Editor{% endblock %}
+
+{% block navtitle %}Editor{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/postit/editor.css') }}">
+{% endblock %}
+
+{% block content %}
+<h1>Post Editor</h1>
+<form method="POST">
+    <input type="text" placeholder="Title" maxlength="100" name="title" id="post-title" value="{{ title }}"/>
+    <div class="content-break"></div>
+    <textarea name="content" id="post-content" placeholder="Post content goes here...">{{ content }}</textarea>
+    
+    <div id="checkbox">
+        <input type="checkbox" name="posted" checked="{{ posted }}"/>
+        <span>Posted?</span>
+    </div>
+    
+   <input type="submit" class="button"/> 
+</form>
+{% endblock %}

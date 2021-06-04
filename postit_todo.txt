@@ -4,16 +4,17 @@
 - Posts Dashboard
 	New /
 	Edit /
-	Delete /
+	Delete 
 	Table [Title, Posted?] /
 	Add links to post editor
 
 - Post Editor
-	Title
-	Content
-	Posted?
-	Post Button
+	Title /
+	Content /
+	Posted? /
+	Post Button /
 	Button to Image dashboard
+	FIX: posted state is correctly loaded
 
 - Image Dashboard
 	Table [Image, Type]
@@ -27,16 +28,16 @@
 
 ---------- API ----------
 Blog
-	Get posts (all) GET
-	Get post (one) GET
+	Get posts (all) GET/
+	Get post (one) GET /
 	Delete  POST
-	Edit post POST
+	Edit post POST /
 
 Project
-	Get posts (all) GET
-	Get post (one) GET
+	Get posts (all) GET /
+	Get post (one) GET /
 	Delete post POST
-	Edit post POST
+	Edit post POST /
 
 Image
 	Get images and folders GET
