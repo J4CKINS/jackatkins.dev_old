@@ -35,9 +35,15 @@ from database import Database
 #PostIT API
 from postit import postit
 
+from gallery import gallery
+
 # create app object
 app = Flask(__name__)
+app.register_blueprint(gallery, url_prefix="")
+
 app.register_blueprint(postit, url_prefix="")
+
+print(app.url_map)
 
 # config app
 app.secret_key = str(uuid.uuid4()).encode()
