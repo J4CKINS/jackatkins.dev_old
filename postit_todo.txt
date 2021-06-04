@@ -6,7 +6,7 @@
 	Edit /
 	Delete 
 	Table [Title, Posted?] /
-	Add links to post editor
+	Add links to post editor /
 
 - Post Editor
 	Title /
@@ -30,13 +30,13 @@
 Blog
 	Get posts (all) GET/
 	Get post (one) GET /
-	Delete  POST
+	Delete  GET /
 	Edit post POST /
 
 Project
 	Get posts (all) GET /
 	Get post (one) GET /
-	Delete post POST
+	Delete post GET /
 	Edit post POST /
 
 Image

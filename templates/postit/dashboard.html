@@ -24,7 +24,7 @@
         <th class="title">{{ post[1] }}</th>
         <th class="posted">{{ post[4] }}</th>
         <th class="edit"><a href="{{ url_for('postit.editor', postType=postType, postID=post[0]) }}">Edit</a></th>
-        <th class="delete"><a>Delete</a></th>
+        <th class="delete"><a href="{{ url_for('postit.delete', postType=postType, postID=post[0]) }}">Delete</a></th>
     </tr>
     {% endfor %}
 </table>

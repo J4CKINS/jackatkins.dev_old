@@ -85,6 +85,12 @@ class Database:
         Database.disconnect()
 
     @staticmethod
+    def deleteBlogPost(ID):
+        Database.connect()
+        Database.cursor.execute('DELETE FROM tblBlogPosts WHERE id=%s;', (ID,))
+        Database.disconnect()
+
+    @staticmethod
     def blogPostExists(ID):
         Database.connect()
         Database.cursor.execute('SELECT id FROM tblBlogPosts WHERE id=%s;', (ID,))
@@ -125,6 +131,12 @@ class Database:
     def updateProjectPost(ID, title, content, posted):
         Database.connect()
         Database.cursor.execute('UPDATE tblProjectPosts SET title=%s, content=%s, posted=%s WHERE id=%s;', (title, content, posted, ID))
+        Database.disconnect()
+
+    @staticmethod
+    def deleteProjectPosts(ID):
+        Database.connect()
+        Database.cursor.execute('DELETE FROM tblProjectPosts WHERE id=%s;', (ID,))
         Database.disconnect()
 
     @staticmethod

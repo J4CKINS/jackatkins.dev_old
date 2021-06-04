@@ -55,7 +55,7 @@ def dashboard(postType):
     return redirect(url_for("postit.login"))
 
 
-@postit.route("editor/<postType>/<postID>", methods=['GET', 'POST'])
+@postit.route("editor/<postType>/<postID>/", methods=['GET', 'POST'])
 def editor(postType, postID):
 
     #incorrect spelling in post type has ocurred
@@ -162,10 +162,26 @@ def editor(postType, postID):
                             posted
                         )
 
-                return redirect(url_for('postit.home'))
+                return redirect(url_for('postit.dashboard', postType=postType))
                 
         return abort(403)
 
+@postit.route("/delete/<postType>/<postID>/")
+def delete(postType, postID):
+
+    # Authenticate user
+    if 'auth' in session and 'id' in session:
+        if Guard.authenticateUserToken(session['id'], session['auth']):
+
+            # Check post type
+            if postType == "blog":
+                Database.deleteBlogPost(postID)
+            else:
+                Database.deleteProjectPosts(postID)
+
+            return redirect(url_for('postit.dashboard', postType=postType))
+
+    return abort(403)
 
 @postit.route("/login/", methods=["GET", "POST"])
 def login():
