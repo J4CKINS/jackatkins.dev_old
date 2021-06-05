@@ -15,6 +15,7 @@
     <input required="true" class="textbox" type="text" name="user"/>
     <p>Password</p>
     <input required="true" class="textbox" type="password" name="password"/><br/>
+    <input type="hidden" name="next" value="{{ request.args.get('next', '') }}"/>
     <input class="button" type="submit"/>
 </form>
 {% endblock %}
