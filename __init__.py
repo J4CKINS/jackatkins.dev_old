@@ -29,6 +29,7 @@ from flask import render_template
 from flask import send_from_directory
 from flask import send_file
 from flask import abort
+from flask import make_response
 
 from database import Database
 
@@ -42,8 +43,6 @@ app = Flask(__name__)
 app.register_blueprint(gallery, url_prefix="")
 
 app.register_blueprint(postit, url_prefix="")
-
-print(app.url_map)
 
 # config app
 app.secret_key = str(uuid.uuid4()).encode()
@@ -340,27 +339,27 @@ def robots():
 # ERROR HANDLING
 @app.errorhandler(404)
 def Error404(e):
-    return render_template(
+    return make_response(render_template(
         "error.html",
         error = "404",
         message = "Sorry, we couldn't find what you were looking for :("
-    )
+    ), 404)
 
 @app.errorhandler(403)
 def Error403(e):
-    return render_template(
+    return make_response(render_template(
         "error.html",
         error = "403",
         message = "Sorry, you are not allowed to access this resource."
-    )
+    ), 403)
 
 @app.errorhandler(500)
 def Error500(e):
-    return render_template(
+    return make_response(render_template(
         "error.html",
         error = "500",
         message = "Oops... An internal error has occurred"
-    )
+    ), 500)
 
 # functions
 
