@@ -65,15 +65,8 @@ def blog():
     
     if request.method == "GET":
 
-        Database.connect()
+        data = Database.getBlogPosts(postedOnly=True)
 
-        # fetch posts from database
-        Database.cursor.execute("SELECT * FROM tblBlogPosts WHERE posted = 1 ORDER BY datestamp DESC;")
-        data = Database.cursor.fetchall()
-
-        Database.disconnect()
-
-        
         # put post data into list
         posts = list()
         for post in data:
@@ -97,13 +90,7 @@ def projects():
 
     if request.method == "GET":
 
-        Database.connect()
-
-        # fetch posts from database
-        Database.cursor.execute("SELECT * FROM tblProjectPosts WHERE posted = 1 ORDER BY datestamp DESC;")
-        data = Database.cursor.fetchall()
-
-        Database.disconnect()
+        data = Database.getProjectPosts(postedOnly=True)
     
         # put post data into list
         posts = list()
@@ -125,13 +112,7 @@ def projects():
 @app.route("/projects/<ID>/")
 def project(ID):
 
-    Database.connect()
-
-    # get post from database
-    Database.cursor.execute("SELECT * FROM tblProjectPosts WHERE id = " + str(ID)  + " AND posted = 1;")
-    data = Database.cursor.fetchone()
-
-    Database.disconnect()
+    data = Database.getProjectPostByID(ID)
 
     if data != None:
         #format datestamp 
@@ -155,177 +136,6 @@ def project(ID):
     else:
         abort(404)
 
-
-@app.route("/image/")
-def images():
-    if request.args.get("format") == "json":
-        return json.dumps(getDirList(image_path))
-    return render_template("images.html", html=dirTreeToHTML(getDirList(image_path), "")) 
-
-def getDirList(directory):
-    tree = {"images":[], "folders":{}}
-    for file in os.listdir(directory):
-        # test if element is a file
-        if "." in file:
-            tree["images"].append(file)
-        else:
-            tree["folders"][str(file + "/")] = getDirList(directory + "/" + file)
-    return tree
-
-# used to convert JSON dir tree to an HTML format
-# wanted to avoid using flask code for this so I made the function here
-def dirTreeToHTML(tree, parent_dir):
-    html = """<ul>"""
-    directory = parent_dir
-    for image in tree["images"]:
-        html += "\n<a href='/image" + directory + "/" + image + "'><li>" + image + "</li></a>"
-
-    for folder in tree["folders"]:
-        html += "\n<b><h2>" + folder + "</h2></b>"
-        html += dirTreeToHTML(tree["folders"][folder], directory + folder)
-    
-    html += "\n</ul>"
-
-    return html
-
-@app.route("/image/<path:path>")
-def image(path):
-    
-    # clamp is a function that is used to keep a value within a specified range
-    # this is used for the URL args because PIL doesnt accept numbers (<=0)
-    # I have written this as a lambda function as it looks cleaner
-    clamp = lambda val,minimum,maximum : max(minimum, min(val, maximum))
-
-    scale = 1 #define scale variable
-    
-    try:
-        image = Image.open(image_path + "/" + path) # try to find image file
-    except FileNotFoundError:
-        abort(404) # if the image could not be found, throw a 404 request error
-    
-    width, height = image.size
-
-    # check if width arg is specified in request
-    if request.args.get('w'):
-        width = int(request.args.get ('w')) # get width
-        width = clamp(width, 1, 5000) # clamp
-    
-    # check if height arg is specified in request
-    if request.args.get('h'):
-        height = int(request.args.get('h')) # get height
-        height = clamp(height, 1, 5000) # clamp
-
-    if request.args.get('scale'):
-        scale = float(request.args.get('scale')) # get scale
-        scale = clamp(scale, 0.01, 5) # clamp
-
-    frmat = path.split(".")[1] # get file format 
-    image = image.resize((width,height)) # resize the image
-
-    image = image.resize((int(width*scale), int(height*scale))) # scale the image
-
-    return servePilImage(image,frmat) # serve the image to the user
-
-def servePilImage(img, format):
-    imgio = BytesIO()
-    img.save(imgio, format.upper(), quality=70)
-    imgio.seek(0)
-    return send_file(imgio, mimetype='image/' + format.lower())
-
-# IMAGE UPLOAD API
-@app.route("/upload_image/", methods=["POST"])
-def upload_image():
-
-    accepted_formats = ["png", "jpeg", "bmp", "svg"]
-    # get request data
-    data = json.loads(request.data)
-
-    #check if request is authorized
-    if authValid(data["auth"]):
-        image_data = base64.b64decode(data["data"]) #decode image data
-
-        if data["format"].lower() in accepted_formats:
-            #write image data to file
-            filename = data["filename"] + "." + data["format"]
-            with open(os.path.join(image_path, data["dir"], filename), "wb") as file:
-                file.write(image_data)
-                
-                return "200"
-        else:
-            abort(500)
-    
-    abort(403)
-
-@app.route("/delete_image/", methods=["POST"])
-def delete_image():
-    data = json.loads(request.data)
-    directory = data["dir"]
-
-    try:
-        if directory[0] == "/" or directory[0] == "\\":
-            directory = directory[1:]
-    except IndexError:pass
-
-    image = os.path.join(image_path, directory)
-
-    if authValid(data["auth"]):
-        os.remove(image)
-        return "200"
-    abort(403)
-
-@app.route("/delete_folder/", methods=["POST"])
-def delete_folder():
-    data = json.loads(request.data)
-    directory = data["dir"]
-
-    try:
-        if directory[0] == "/" or directory[0] == "\\":
-            directory = directory[1:]
-    except IndexError:pass
-
-    folder = os.path.join(image_path, directory)
-
-    if authValid(data["auth"]):
-        deleteFolderContents(folder)
-        os.rmdir( os.path.join(image_path, directory) )
-        return "200"
-    abort(403)
-
-def deleteFolderContents(directory):
-    for item in os.listdir(directory):
-
-        # if item is a file
-        if os.path.isfile( os.path.join(image_path, directory, item) ):
-            os.remove(os.path.join(image_path, directory, item))
-        
-        # if item is a folder, recusively delete everything inside the folder and then the folder itself
-        elif os.path.isdir( os.path.join(image_path, directory, item) ):
-            deleteFolderContents(os.path.join(image_path, directory, item))
-            os.rmdir( os.path.join(image_path, directory, item) )
-
-@app.route("/create_folder/", methods=["POST"])
-def create_folder():
-    data = json.loads(request.data)
-    dirName = data["dir"]
-    try:
-        if dirName[0] == "/" or dirName[0] == "\\":
-            dirName = dirName[1:]
-    except IndexError:pass
-
-    folderPath = os.path.join(image_path, dirName)
-
-    if authValid(data["auth"]):
-        os.makedirs(folderPath)
-        return "200"
-    abort(403)
-
-def authValid(auth):
-    # fetch auth key
-    with open(os.path.join(app_path, "auth.txt"), "rb") as file:
-        auth_key = file.read()
-    
-    return bcrypt.checkpw(auth.encode(), auth_key)
-
 #WOTW
 @app.route("/emma/")
 def wotw():
@@ -335,6 +145,8 @@ def wotw():
 @app.route("/robots.txt")
 def robots():
     return send_file(app_path + "/robots.txt")
+
+
 
 # ERROR HANDLING
 @app.errorhandler(404)
@@ -362,7 +174,6 @@ def Error500(e):
     ), 500)
 
 # functions
-
 # MARKDOWN CONVERTER
 def convertMarkdown(data):
     return markdown.markdown(data, extensions=[FencedCodeExtension()])
