@@ -89,7 +89,7 @@ def editor(postType, postID):
             if post:
                 title = post[1]
                 content = post[2]
-                posted = str(bool(post[4])).lower()
+                posted = bool(post[4])
             
             # redirect to a new post if no data was found
             else:

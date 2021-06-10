@@ -10,13 +10,16 @@
 
 {% block content %}
 <h1>Post Editor</h1>
+<div class="content-break"></div>
 <form method="POST">
-    <input type="text" placeholder="Title" maxlength="100" name="title" id="post-title" value="{{ title }}"/>
+    <input type="text" placeholder="Title" maxlength="100" name="title" id="post-title" value="{{ title }}"/><br/>
+    <div class="content-break"></div>
+    <a href="{{ url_for('gallery.home') }}" target="_blank"><input type="button" class="button" id="gallery-button" value="Gallery"></a><br/>
     <div class="content-break"></div>
     <textarea name="content" id="post-content" placeholder="Post content goes here...">{{ content }}</textarea>
     
     <div id="checkbox">
-        <input type="checkbox" name="posted" checked="{{ posted }}"/>
+        <input type="checkbox" name="posted" {% if posted %}checked{% endif %}/>
         <span>Posted?</span>
     </div>
     

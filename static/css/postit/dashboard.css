@@ -2,10 +2,14 @@ table {
     width: 100%;
     border-collapse: collapse;
     box-shadow: #00000055 10px 10px 10px;
+    table-layout: fixed;
 }
 
+td,
 th {
     padding: 10px;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 a {
@@ -29,11 +33,11 @@ tr:nth-child(odd) {
     text-align: left;
 }
 
-.edit a {
+.edit a img {
     color: #487eb0;
 }
 
-.delete a {
+.delete a img {
     color: #c23616;
 }
 
