@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Gallery{% endblock %}
+{% block navtitle %}Gallery{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/gallery/gallery.css') }}">
+{% endblock %}
+
+{% block content %}
+<script src="{{ url_for('static', filename='js/gallery/create_folder.js') }}"></script>
+<script src="{{ url_for('static', filename='js/gallery/delete_image.js') }}"></script>
+<script src="{{ url_for('static', filename='js/gallery/delete_folder.js') }}"></script>
+<script src="{{ url_for('static', filename='js/gallery/copy_to_clipboard.js') }}"></script>
+
+<h1>Gallery</h1>
+<div class="content-break"></div>
+<p id="directory">{{ current_path }}</p>
+<table>
+    <tr id="row-titles">
+        <th class="left">Item Name</th>
+        <th></th>
+        <th><a href="{{ url_for('gallery.upload', path=current_path) }}"><img src="{{ url_for('static', filename='svg/add_image.svg') }}" class="clickable" title="Upload image"/></a></th>
+        <th><img src="{{ url_for('static', filename='svg/create_folder.svg') }}" onclick="create_folder('{{ current_path }}')" class="clickable" title="Create folder"/></th>
+    </tr>
+    {% for folder in tree["folders"] %}
+    <tr>
+        <td class="left"><a href="{{ url_for('gallery.home', path=current_path + '/' + folder) }}">{{ folder }}</a>/</td>
+        <td><img src="{{ url_for('static', filename='svg/folder.svg') }}" title="Folder"/></td>
+        <td><img src="{{ url_for('static', filename='svg/delete.svg') }}" onclick="delete_folder('{{ current_path }}', '{{ folder }}')" class="clickable" title="Delete folder"/></td>
+        <td></td>
+    </tr>
+    {% endfor %}
+
+    {% for image in tree["images"] %}
+    <tr id="{{ loop.index0 }}">
+        <td class="left"><a href="{{ url_for('gallery.image', path=current_path + '/' + image, _external=True) }}">{{ image }}</a></td>
+        <td><img src="{{ url_for('static', filename='svg/image.svg') }}" title="Image"/></td>
+        <td><img src="{{ url_for('static', filename='svg/delete.svg') }}" onclick="delete_image('{{ current_path }}', '/{{image}}/')" class="clickable" title="Delete image"/></td>
+        <td><img src="{{ url_for('static', filename='svg/copy.svg') }}" onclick="copy_to_clipboard('{{ loop.index0 }}')" class="clickable" title="Copy image"/><input type="hidden" value="{{ url_for('gallery.image', path=current_path + '/' + image, _external=True) }}" id="copy-buffer"/></td>
+    </tr>
+    {% endfor %}
+</table>
+<input type="hidden" id="copy"/>
+{% endblock %}
