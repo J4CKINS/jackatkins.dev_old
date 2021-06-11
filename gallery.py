@@ -26,7 +26,7 @@ gallery = Blueprint(
     'gallery',
     __name__,
     template_folder="./templates",
-    subdomain="gallery"
+    url_prefix="/gallery"
 )
 
 # PROTECTED ENDPOINTS DECORATOR

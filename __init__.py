@@ -40,9 +40,9 @@ from gallery import gallery
 
 # create app object
 app = Flask(__name__)
-app.register_blueprint(gallery, url_prefix="")
+app.register_blueprint(gallery)
 
-app.register_blueprint(postit, url_prefix="")
+app.register_blueprint(postit)
 
 # config app
 app.secret_key = str(uuid.uuid4()).encode()

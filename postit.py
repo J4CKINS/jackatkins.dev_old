@@ -17,7 +17,7 @@ from guard import Guard
 postit = Blueprint(
     'postit',
     __name__,
-    subdomain="postit",
+    url_prefix="/postit",
     static_folder="./static",
     template_folder="./templates"
 )
