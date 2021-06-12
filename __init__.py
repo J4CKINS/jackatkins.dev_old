@@ -45,7 +45,7 @@ app.register_blueprint(gallery)
 app.register_blueprint(postit)
 
 # config app
-app.secret_key = str(uuid.uuid4()).encode()
+app.secret_key = b"50de4b4c-760c-4249-b466-5497659e0954"
 
 #FOLDER PATHS
 
