@@ -10,7 +10,7 @@
 {%block content%}
 <script src="{{ url_for('static', filename='js/gallery/upload_page_scripts.js') }}"></script>
 <h1>Upload Image</h1>
-<form action="/new/image/", method="POST" enctype="multipart/form-data">
+<form action="{{ url_for('gallery.new_image') }}", method="POST" enctype="multipart/form-data">
     <input type="hidden" name="path" id="path" value="{{ request.args.get('path', default='') }}"/>
     <input type="hidden" name="format" value="" id="format"/>
     <input type="text" placeholder="filename" name="filename" id="filename" required="true"/><br/>

@@ -110,13 +110,10 @@ def getDirectoryList(directory):
 @gallery.route("/new/image/", methods=["POST"])
 @login_required
 def new_image():
-    print("\n\n\n\n")
     path = request.form.get("path", "")
     filename = request.form.get("filename", None)
     fileformat = request.form.get("format", None)
     image = request.files.get('file', None)
-
-    print(path,filename,fileformat,image)
 
     # check if all data is present
     if not filename or not fileformat or not image:
@@ -146,8 +143,26 @@ def delete_image(path):
 @gallery.route("/delete/folder/<path:path>/", methods=["POST"])
 @login_required
 def delete_folder(path):
-    try:
-        shutil.rmtree(os.path.join(image_path, path))
-        return Response(status=200)
-    except:
-        return Response(status=500)
+    delete_items_in_folder(os.path.join(image_path, path))
+    return Response(status=200)
+
+def delete_items_in_folder(path):
+    files = list()
+    folders = list()
+
+    #get files and folders
+    for item in os.listdir(path):
+        if os.path.isfile(os.path.join(path, item)):
+            files.append(os.path.join(path,item))
+        else:
+            folders.append(os.path.join(path,item))
+
+    #delete images
+    for file in files:
+        os.remove(file)
+
+    for folder in folders:
+        delete_items_in_folder(folder)
+        os.rmdir(folder)
+
+    os.rmdir(path)
