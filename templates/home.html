@@ -15,15 +15,15 @@
 </div>
 <div class="content-break">
     <h1>Skills</h1>
-    <div id="language-icons">
-        <img src="{{ url_for('static', filename='svg/skills/python.svg') }}" onmouseover="showDescription(event, 'Python: 7 years of experience')" onmouseout="deleteBox()"/>
-        <img src="{{ url_for('static', filename='svg/skills/flask.svg') }}" onmouseover="showDescription(event, 'Experience with flask web app development')" onmouseout="deleteBox()"/>
-        <img src="{{ url_for('static', filename='svg/skills/html.svg') }}" onmouseover="showDescription(event, 'HTML: 6 Years of experience')" onmouseout="deleteBox()"/>
-        <img src="{{ url_for('static', filename='svg/skills/css.svg') }}" onmouseover="showDescription(event, 'CSS: 6 Years of experience')" onmouseout="deleteBox()"/>
-        <img src="{{ url_for('static', filename='svg/skills/javascript.svg') }}" onmouseover="showDescription(event, 'JavaScript: Experience with both node and vanilla')" onmouseout="deleteBox()"/>
-        <img src="{{ url_for('static', filename='svg/skills/csharp.svg') }}" onmouseover="showDescription(event, 'C#: experience in WPF app development')" onmouseout="deleteBox()"/>
-        <img src="{{ url_for('static', filename='svg/skills/mysql.svg') }}" onmouseover="showDescription(event, 'Good knowlege of MySQL')" onmouseout="deleteBox()"/>
-        <img src="{{ url_for('static', filename='svg/skills/git.svg') }}" onmouseover="showDescription(event, 'Good knowlege of Git source control')" onmouseout="deleteBox()"/>
+    <div id="skill-icons">
+        <img src="{{ url_for('static', filename='svg/skills/python.svg') }}" onclick="showDescription(event, 'Python: 7 years of experience')"/>
+        <img src="{{ url_for('static', filename='svg/skills/flask.svg') }}" onclick="showDescription(event, 'Experience with flask web app development')"/>
+        <img src="{{ url_for('static', filename='svg/skills/html.svg') }}" onclick="showDescription(event, 'HTML: 6 Years of experience')"/>
+        <img src="{{ url_for('static', filename='svg/skills/css.svg') }}" onclick="showDescription(event, 'CSS: 6 Years of experience')"/>
+        <img src="{{ url_for('static', filename='svg/skills/javascript.svg') }}" onclick="showDescription(event, 'JavaScript: Experience with both node and vanilla')"/>
+        <img src="{{ url_for('static', filename='svg/skills/csharp.svg') }}" onclick="showDescription(event, 'C#: experience in WPF app development')"/>
+        <img src="{{ url_for('static', filename='svg/skills/mysql.svg') }}" onclick="showDescription(event, 'Good knowlege of MySQL')"/>
+        <img src="{{ url_for('static', filename='svg/skills/git.svg') }}" onclick="showDescription(event, 'Good knowlege of Git source control')"/>
     </div>
     <div id="box-container"></div>
 </div>

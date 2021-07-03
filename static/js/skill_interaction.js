@@ -1,5 +1,7 @@
+const documentBody = document.getElementsByTagName("body");
+
 function showDescription(event, text) {
-    //find last description box and delete it;
+    //find `la`st description box and delete it;
     deleteBox();
     var x = event.clientX;
     var y = event.clientY;
@@ -40,3 +42,11 @@ function expandAnimation(element) {
         }
     }, 1);
 }
+
+// close skill description when window is clicked
+// only delete the description box if a skill is not being clicked
+window.addEventListener("click", (event) => {
+    if (event.target.parentElement.id != "skill-icons") {
+        deleteBox();
+    }
+});
