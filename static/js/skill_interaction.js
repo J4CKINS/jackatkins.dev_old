@@ -1,10 +1,11 @@
-const documentBody = document.getElementsByTagName("body");
-
 function showDescription(event, text) {
-    //find `la`st description box and delete it;
+    //find last description box and delete it;
     deleteBox();
-    var x = event.clientX;
-    var y = event.clientY;
+    clearClickedStyle();
+    
+    // get element that has been clicked
+    let target = event.target;
+    target.classList.add("clicked")
 
     let box = document.createElement("DIV");
     box.id = "description-box";
@@ -43,10 +44,24 @@ function expandAnimation(element) {
     }, 1);
 }
 
+function clearClickedStyle() {
+    // Removes all clicked classes from buttons
+    let buttons = document.getElementById("skill-icons").children;
+    for(let x = 0; x < buttons.length; x++) {
+        buttons[x].classList.remove("clicked");
+    }
+}
+
 // close skill description when window is clicked
 // only delete the description box if a skill is not being clicked
 window.addEventListener("click", (event) => {
-    if (event.target.parentElement.id != "skill-icons") {
-        deleteBox();
+    try {
+        if (event.target.parentElement.id != "skill-icons") {
+            clearClickedStyle();
+            deleteBox();
+        }
+    }
+    catch {
+        
     }
 });

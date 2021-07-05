@@ -12,6 +12,11 @@
     padding: 2px;
 }
 
+#skill-icons .clicked {
+    background-color: #ffffff22;
+    padding: 2px;
+}
+
 #description-box {
     overflow: hidden;
     background-color: #0e1013dd;
