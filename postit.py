@@ -1,6 +1,10 @@
 import bcrypt
 import uuid
 import functools
+import datetime
+
+from styler import convertMarkdown
+from styler import highlightCode
 
 from flask import Blueprint
 from flask import render_template
@@ -32,6 +36,7 @@ def login_required(func):
         return redirect(url_for('postit.login', next=request.url))
 
     return secure_function
+
 
 #ROUTES
 
@@ -194,3 +199,14 @@ def login():
             return redirect(next_url)
 
         return redirect(url_for('home')) # if user cannot be authenticated, redirect to dashboard page
+
+@postit.route("/preview/", methods=["POST"])
+@login_required
+def preview():
+
+    # get post title and content
+    title = request.form.get("title","")
+    content = highlightCode(convertMarkdown(request.form.get("content","")))
+    date = datetime.date.today()
+
+    return render_template('postit/post_preview.html', title=title, content=content, date=date)

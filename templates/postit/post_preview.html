@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }} [PREVIEW]{% endblock %}
+{% block navtitle %}Post Preview{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/post.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/syntax.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="post-container">
+    <div class="post">
+        <div class="head">
+            <p class="post-title">{{ title }}</p>
+            <p class="post-date">{{ date }}</p>
+        </div>
+        <p class="post-content">{{ content|safe }}</p>
+    </div>
+</div>
+{% endblock %}

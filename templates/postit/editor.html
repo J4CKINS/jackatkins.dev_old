@@ -23,6 +23,7 @@
         <span>Posted?</span>
     </div>
     
-   <input type="submit" class="button"/> 
+   <input type="submit" class="button"/>
+   <input type="submit" class="button" formaction="{{ url_for('postit.preview') }}" value="Preview Post"/>
 </form>
 {% endblock %}
