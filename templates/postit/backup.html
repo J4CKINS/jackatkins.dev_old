@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Backup{% endblock %}
+{% block navtitle %}Backup{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+<div class="content-break"></div>
+<h2>Choose what you would like to backup</h2>
+<div class="content-break"></div>
+<form method="POST">
+    <label for="images">Images</label>
+    <input type="checkbox" name="images"/><br/>
+    <label for="posts">Posts</label>
+    <input type="checkbox" name="posts"/><br/>
+    <div class="content-break"></div>
+    <input type="submit" class="button"/>
+</form>
+{% endblock %}

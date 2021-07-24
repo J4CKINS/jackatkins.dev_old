@@ -2,6 +2,10 @@ import bcrypt
 import uuid
 import functools
 import datetime
+import zipfile
+import os
+from io import StringIO
+from io import BytesIO
 
 from styler import convertMarkdown
 from styler import highlightCode
@@ -14,9 +18,13 @@ from flask import request
 from flask import abort
 from flask import session
 from flask import make_response
+from flask import send_file
 
 from database import Database
 from guard import Guard
+
+app_path = os.path.dirname(os.path.realpath(__file__))
+image_path = os.path.join(app_path,"static", "uploads")
 
 postit = Blueprint(
     'postit',
@@ -210,3 +218,65 @@ def preview():
     date = datetime.date.today()
 
     return render_template('postit/post_preview.html', title=title, content=content, date=date)
+
+@postit.route("/backup/", methods=["GET", "POST"])
+@login_required
+def backup():
+
+    if request.method == "GET":
+        return render_template("postit/backup.html")
+    
+    elif request.method == "POST":
+
+        zip_bytes = BytesIO()
+        backup_zip = zipfile.ZipFile(zip_bytes, "w")
+
+        backup_images = bool(request.form.get('images'))
+        backup_posts = bool(request.form.get('posts'))
+
+        if backup_posts:
+            # Get all posts from database
+            blog_posts = Database.getBlogPosts()
+            project_posts = Database.getProjectPosts()
+
+            # Process blog posts
+            for post in blog_posts:
+                post_data = str()
+                for element in post:
+                    post_data += (str(element) + "\n\n")
+                
+                with backup_zip.open(f"posts/blog/{str(post[0])}.txt", "w") as file:
+                    file.write(post_data.encode())
+
+            # Process project posts
+            for post in project_posts:
+                post_data = str()
+                for element in post:
+                    post_data += (str(element) + "\n\n")
+
+                with backup_zip.open(f"posts/projects/{str(post[0])}.txt", "w") as file:
+                    file.write(post_data.encode())
+
+        if backup_images:
+            
+            def save_folder_contents(path):
+                for foldername, subfolders, filenames in os.walk(path):
+                    for filename in filenames:
+                        
+                        path = os.path.join(foldername, filename)
+
+                        with open(path, "rb") as file:
+                            with backup_zip.open(os.path.join("uploads",foldername[len(image_path)+1:],filename), "w") as wfile:
+                                wfile.write(file.read())
+                    
+                    for folder in subfolders:
+                        save_folder_contents(os.path.join(path, folder))
+
+            save_folder_contents(image_path)
+
+        backup_zip.close()
+        zip_bytes.seek(0)
+        return send_file(zip_bytes, attachment_filename="backup-"+str(datetime.datetime.now())+".zip", as_attachment=True)
+        
+
+        
