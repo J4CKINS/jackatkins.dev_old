@@ -4,7 +4,7 @@
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/post.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/syntax.css') }}">
-<script src="{{ url_for('static', filename='js/expand.js') }}"></script>
+<script src="{{ url_for('static', filename='js/load_blog_content.js') }}"></script>
 {% endblock %}
 
 {% block navtitle %}Blog{% endblock %}
@@ -15,13 +15,16 @@
     <div class="post" id="blog-{{ post[0] }}">
         <div class="head">
             <p class="post-title">{{ post[1] }}</h1>
-            <p class="post-date">{{ post[3] }}</p>    
-            </div>
-        <p class="post-content">{{ post[2]|safe }}</p>
+            <p class="post-date">{{ post[2] }}</p>
+        </div>
+        <p class="post-content"></p>
+        <p class="expand" onclick="loadBlogContent('{{ post[0] }}')">Show More</p>
+        <div class="link">
+            <img src="{{ url_for('static', filename='svg/link.svg') }}"/>
+            <input type="text" value="{{ request.url }}{{ post[0] }}" onclick="this.select();" readonly/>
+        </div>
     </div>
-    <p class="expand" id="expand-{{ post[0] }}" onclick="expand('{{ post[0] }}');">Show More</p>
 </div>
 {% endfor %}
 
-<p id="callbacks">{% block callbacks %}setExpandControls{% endblock %}</p>
 {% endblock %}

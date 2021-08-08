@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Blog{% endblock %}
+{% block navtitle %}Blog{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/post.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/syntax.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="post-container">
+    <div class="post" id="blog-{{ post[0] }}">
+        <div class="head">
+            <p class="post-title">{{ post[1] }}</h1>
+            <p class="post-date">{{ post[3] }}</p>
+        </div>
+        <p class="post-content">{{ post[2]|safe }}</p>
+    </div>
+</div>
+{% endblock %}

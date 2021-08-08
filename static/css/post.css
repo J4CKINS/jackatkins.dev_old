@@ -95,11 +95,29 @@ a {
     margin-top: 20px;
 }
 
-.post-date {
+.post-date, .post .link input {
     color: #ffffff88;
     float: left;
     font-style: italic;
     font-size: 15px;
+}
+
+.post .link {
+    margin: auto;
+    float: left;
+    display: flex;
+}
+
+.post .link * {
+    padding: 5px 0;
+}
+
+.post .link input {
+    padding: 5px 0px;
+    background-color: #00000000;
+    border: none;
+    width: 300px;
+    outline: none;
 }
 
 .expand {

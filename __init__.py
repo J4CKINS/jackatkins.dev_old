@@ -72,13 +72,34 @@ def blog():
             posts.append([
                 post[0],
                 post[1],
-                highlightCode(convertMarkdown(post[2])),
                 date,
             ])
         
-
         return render_template("blog.html", posts=posts)
 
+@app.route("/blog/<ID>/")
+def blog_post(ID):
+
+    if Database.blogPostExists(ID):
+        if request.args.get("raw_content") == "true" or request.args.get("raw_content") == "1":
+            return str(
+                highlightCode(
+                    convertMarkdown(
+                        Database.getBlogPostByID(ID)[2]
+                    )
+                )
+            )
+        
+        else:
+            post = [
+                Database.getBlogPostByID(ID)[0],
+                Database.getBlogPostByID(ID)[1],
+                str(highlightCode(convertMarkdown(Database.getBlogPostByID(ID)[2]))),
+                Database.getBlogPostByID(ID)[3],
+            ]
+            return render_template('blog_post.html', post=post)
+
+    else: return abort(404)
 
 @app.route("/projects/", methods=["GET","POST"])
 def projects():
