@@ -14,8 +14,9 @@
 </div>
 <div class="content-break">
     {% for post in posts %}
-        <div class="post">
+        <div class="post-container">
             <h1 class="post-title">{{ post["title"] }}</h1>
+            <div class="content-break"></div>
             <a href="{{ post['ID'] }}/"><button>View Project</button></a>
         </div>
     {% endfor %}
