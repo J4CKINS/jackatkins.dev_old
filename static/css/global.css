@@ -86,32 +86,33 @@ button:focus, .button:focus {
 nav {
     background-color: #1e2329;
     width: 100%;
-    float: left;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 nav p {
-    float: left;
     margin-left: 30px;
     color: white;
-    font-size: 28px;
+    font-size: 20px;
 }
 
 nav ul {
-    float: right;
     list-style-type: none;
     overflow: hidden;
+    margin: auto;
     margin-right: 30px;
+    padding: 10px 0px;
 }
 
 nav a {
-    float: right;
     color: white;
     text-decoration: none;
 }
 
 nav li {
-    padding: 10px 20px 10px 20px;
-    
+    display: inline;
+    padding: 10px 20px;
 }
 
 nav li:hover {
@@ -127,11 +128,10 @@ nav li:hover {
 
 nav img {
     display: none;
-    float: right;
     width: 25px;
     height: 25px;
-    margin: 5px;
-    margin-right: 20px;
+    margin: 10px;
+    margin-left: auto;
 }
 nav img:hover {
     cursor: pointer;
@@ -149,7 +149,7 @@ nav .github:hover {
         display: none;
     }
     nav img {
-        display: block;
+        display: flex;
     }
     nav p {
         font-size: 20px;
