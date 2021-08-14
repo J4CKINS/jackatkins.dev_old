@@ -223,10 +223,15 @@ footer p {
 footer img {
     margin: 10px;
     width: 30px;
-    transition: all ease-in-out .1s;
+    transition: all ease-in-out .2s;
     border-radius: 50%;
+    filter:
+        brightness(100%)
+        contrast(0%)
+        grayscale(100%)
+    ;
 }
 
 footer img:hover {
-    border: 3px solid #ffffff;
+    filter: none;
 }
