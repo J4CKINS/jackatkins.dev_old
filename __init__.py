@@ -40,7 +40,8 @@ app.register_blueprint(gallery)
 app.register_blueprint(postit)
 
 # config app
-app.secret_key = b"50de4b4c-760c-4249-b466-5497659e0954"
+with open("app_key.txt", "r") as file:
+    app.secret_key = file.read()
 
 #FOLDER PATHS
 
