@@ -5,3 +5,4 @@ venv/
 schema.py
 database.db
 static/uploads
+app_key.txt
