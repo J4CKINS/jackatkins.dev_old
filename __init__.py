@@ -56,32 +56,31 @@ image_path = os.path.join(app_path,"static/uploads/")
 def home():
     return render_template("home.html")
 
-@app.route("/blog/", methods=["GET","POST"])
+@app.route("/blog/")
 def blog():
     
-    if request.method == "GET":
+    data = Database.getBlogPosts(postedOnly=True)
 
-        data = Database.getBlogPosts(postedOnly=True)
+    # put post data into list
+    posts = list()
+    for post in data:
 
-        # put post data into list
-        posts = list()
-        for post in data:
-
-            #format datestamp
-            day, month, year = Database.formatDatestamp(post[3])
-            date = day + "-" + month + "-" + year
-            posts.append([
-                post[0],
-                post[1],
-                date,
-            ])
+        #format datestamp
+        day, month, year = Database.formatDatestamp(post[3])
+        date = day + "-" + month + "-" + year
         
-        return render_template("blog.html", posts=posts)
+        posts.append([
+            post[0],
+            post[1],
+            date,
+        ])
+    
+    return render_template("blog.html", posts=posts)
 
 @app.route("/blog/<ID>/")
 def blog_post(ID):
 
-    if Database.blogPostExists(ID):
+    if Database.blogPostExists(ID, postedOnly=True):
         if request.args.get("raw_content") == "true" or request.args.get("raw_content") == "1":
             return str(
                 highlightCode(
@@ -129,29 +128,23 @@ def projects():
 @app.route("/projects/<ID>/")
 def project(ID):
 
+    if not Database.projectPostExists(ID, postedOnly=True): return abort(404)
+    
     data = Database.getProjectPostByID(ID)
 
-    if data != None:
-        #format datestamp 
-        datestamp   = data[3]
-        day         = datestamp.strftime("%d")
-        month       = datestamp.strftime("%m")
-        year        = datestamp.strftime("%Y")
+    day, month, year = Database.formatDatestamp(data[3])
+    date = day + "-" + month + "-" + year
 
-        date = day + "-" + month + "-" + year
+    # append data to dict
+    post = {
+        "title":data[1],
+        "content":highlightCode(convertMarkdown(data[2])),
+        "datestamp":date
+    }
 
-        # append data to dict
-        post = {
-            "title":data[1],
-            "content":highlightCode(convertMarkdown(data[2])),
-            "datestamp":date
-        }
+    return render_template("project.html", post=post)
 
-        return render_template("project.html", post=post)
-    
-    # no post found
-    else:
-        abort(404)
+
 
 #WOTW
 @app.route("/emma/")

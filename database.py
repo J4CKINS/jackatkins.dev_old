@@ -65,9 +65,12 @@ class Database:
         return data
 
     @staticmethod
-    def getBlogPostByID(ID):
+    def getBlogPostByID(ID, postedOnly=False):
         Database.connect()
-        Database.cursor.execute('SELECT * FROM tblBlogPosts WHERE id=%s;', (ID,))
+        if postedOnly:
+            Database.cursor.execute('SELECT * FROM tblBlogPosts WHERE id=%s AND posted=1;', (ID,))
+        else:
+            Database.cursor.execute('SELECT * FROM tblBlogPosts WHERE id=%s;', (ID,))
         data = Database.cursor.fetchone()
         Database.disconnect()
         return data
@@ -91,9 +94,13 @@ class Database:
         Database.disconnect()
 
     @staticmethod
-    def blogPostExists(ID):
+    def blogPostExists(ID, postedOnly=False):
         Database.connect()
-        Database.cursor.execute('SELECT id FROM tblBlogPosts WHERE id=%s;', (ID,))
+        if postedOnly:
+            Database.cursor.execute('SELECT id FROM tblBlogPosts WHERE id=%s AND posted=1;', (ID,))
+        else:
+            Database.cursor.execute('SELECT id FROM tblBlogPosts WHERE id=%s;', (ID,))
+
         data = Database.cursor.fetchone()
         Database.disconnect()
         if data:
@@ -140,9 +147,13 @@ class Database:
         Database.disconnect()
 
     @staticmethod
-    def projectPostExists(ID):
+    def projectPostExists(ID, postedOnly=False):
         Database.connect()
-        Database.cursor.execute('SELECT id FROM tblProjectPosts WHERE id=%s;', (ID,))
+        if postedOnly:
+            Database.cursor.execute('SELECT id FROM tblProjectPosts WHERE id=%s AND posted=1;', (ID,))
+        else:
+            Database.cursor.execute('SELECT id FROM tblProjectPosts WHERE id=%s;', (ID,))
+            
         data = Database.cursor.fetchone()
         Database.disconnect()
         if data:
