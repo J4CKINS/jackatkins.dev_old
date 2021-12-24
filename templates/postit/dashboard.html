@@ -10,6 +10,10 @@
 
 {% block content %}
 <h1>Dashboard</h1>
+<div class="dashboard-nav">
+    <a href="{{ url_for('postit.dashboard', postType='blog') }}">Blog</a>
+    <a href="{{ url_for('postit.dashboard', postType='projects') }}">Projects</a>
+</div>
 <table>
     <tr id="row-titles">
         <th class="id">ID</th>
