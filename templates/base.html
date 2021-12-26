@@ -21,10 +21,15 @@
 
         <div id="mobnav" onclick="closeNav();">
             <div id="frame">
-                <a href="{{ url_for('home') }}"><p>Home</p></a>
-                <a href="{{ url_for('projects') }}"><p>Projects</p></a>
-                <a href="{{ url_for('blog') }}"><p>What's Happenin'</p></a>
-                <a href="https://github.com/J4CKINS"><p class="github">GitHub</p></a>
+                <div id="close-nav">
+                <img  src="{{ url_for('static', filename='svg/cross.svg') }}" onclick="closeNav();"/>
+                </div>
+                <div class="nav-items">
+                    <a href="{{ url_for('home') }}"><p>Home</p></a>
+                    <a href="{{ url_for('projects') }}"><p>Projects</p></a>
+                    <a href="{{ url_for('blog') }}"><p>What's Happenin'</p></a>
+                    <a href="https://github.com/J4CKINS"><p class="github">GitHub</p></a>
+                </div>
             </div>
         </div>
 

@@ -158,25 +158,43 @@ nav .github:hover {
 }
 
 #mobnav {
-    display: none;
     position: fixed;
-    z-index: 2;
-    float: right;
-    width: 100%;
-    height: 100%;
+    z-index: 999;
+    width: 100vw;
+    height: 100vh;
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 50px;
     background-color: #000000bb;
-    margin: auto;
-    text-align: right;
-    transition: display 1s;
 }
 
 #mobnav #frame {
     padding: 0;
-    width:75%;
+    width:100%;
     height: 100%;
-    float: right;
     background-color: #2a2e38;
     text-align: center; 
+    border-radius: 15px;
+}
+
+#mobnav #frame #close-nav {
+    text-align: end;
+    width: 100%;
+    padding: 15px;
+}
+#mobnav #frame #close-nav img {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}
+
+#mobnav #frame .nav-items {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
 }
 
 #mobnav #frame a {
@@ -187,6 +205,9 @@ nav .github:hover {
 #mobnav #frame p {
     width: 100%;
     padding: 10px 20px 10px 20px;
+    margin: 10px 0px;
+    font-weight: bold;
+    font-size: 24px;
 }
 
 #mobnav #frame p:hover {

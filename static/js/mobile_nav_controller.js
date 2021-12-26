@@ -2,7 +2,7 @@ const nav = document.getElementById("mobnav");
 const frame = nav.children.item(0);
 
 function openNav() {
-    nav.style.display = "block"
+    nav.style.display = "flex"
 }
 
 function closeNav() {
